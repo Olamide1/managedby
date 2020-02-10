@@ -1,0 +1,23 @@
+{
+  "name": "managedby",
+  "version": "1.0.0",
+  "description": "An office management tool for Nigerian companies",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "office",
+    "management",
+    "tool."
+  ],
+  "author": "Olamide Akomolafe <olamideakomolafe1234@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "boom": "^7.3.0",
+    "fastify": "^2.12.0",
+    "fastify-swagger": "^2.5.0",
+    "mongoose": "^5.8.11",
+    "nodemon": "^2.0.2"
+  }
+}
