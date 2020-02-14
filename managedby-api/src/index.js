@@ -2,7 +2,7 @@
 const fastify = require('fastify')({
   logger: true
 })
-
+const cors = require('cors')
 // Require external modules
 const mongoose = require('mongoose')
 const routes = require('./routes')
