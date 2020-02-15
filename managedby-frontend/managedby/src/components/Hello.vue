@@ -33,7 +33,7 @@
   <b-form-group>
         <b-form-input placeholder="Firstname"  v-model="firstname"></b-form-input>
          <b-form-input placeholder="Lastname"  v-model="lastname"></b-form-input>
-    </b-form-group>
+  </b-form-group>
 
     <b-form-group>
         <b-form-input placeholder="Company Email" v-model="company_email" type="email"></b-form-input>
@@ -88,6 +88,7 @@ export default {
           console.log(res.data)
           sessionStorage.setItem('firstname', res.data[0].firstname)
           sessionStorage.setItem('company_email', res.data[0].company_email)
+          sessionStorage.setItem('company_name', res.data[0].company_name)
           this.$router.push('/dashboard')
         }
       }).catch(err => {
@@ -131,5 +132,10 @@ export default {
 }
 </script>
 <style>
+
+@media (min-width: 600px) {
+  .container-fluid { width: 50%; }
+}
+
 
 </style>

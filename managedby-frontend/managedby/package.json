@@ -16,8 +16,8 @@
     "jquery": "^3.4.1",
     "resolve-url-loader": "^3.1.1",
     "vue": "^2.6.11",
-    "vue-router": "^3.0.1",
-    "vue-sidebar-menu": "^4.5.1"
+    "vue-burger-menu": "^2.0.3",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.5",
