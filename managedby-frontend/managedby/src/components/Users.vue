@@ -37,6 +37,12 @@ export default {
             company_name: sessionStorage.getItem('company_name'),
             role: sessionStorage.getItem('role')
         }
+    },
+    methods: {
+        logout () {
+            sessionStorage.clear();
+            this.$router.push('/')
+        },
     }
 }
 </script>
