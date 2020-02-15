@@ -3,6 +3,8 @@ const fastify = require('fastify')({
   logger: true
 })
 const cors = require('cors')
+
+fastify.use(cors())
 // Require external modules
 const mongoose = require('mongoose')
 const routes = require('./routes')

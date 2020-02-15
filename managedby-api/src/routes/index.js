@@ -23,8 +23,8 @@ const routes = [
     },
     {
         method: 'POST',
-        url: '/api/username',
-        handler: userController.SearchByUsername
+        url: '/api/companyname',
+        handler: userController.SearchByCompany
     }
 ]
 

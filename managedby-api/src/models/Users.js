@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-    name: String, 
-    username: String, 
+    lastname: String, 
+    firstname: String, 
     company_name: String, 
     company_email: String,
     password: String,
@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
     role: String,
     industry: String, 
     company_size: String,
-    creator: String
+    creator: String,
+    company_pin: String
 })
 
 module.exports = mongoose.model('User', userSchema)

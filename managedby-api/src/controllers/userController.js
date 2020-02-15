@@ -16,10 +16,10 @@ exports.login = async (req, reply) => {
     }
 }
 
-exports.SearchByUsername = async (req, reply) => {
+exports.SearchByCompany = async (req, reply) => {
     try {
-        let username =  req.body.username
-        var user = User.findOne({'username': username})
+        let company_email =  req.body.company_email
+        var user = User.findOne({'company_email': company_email})
     return user
     } catch (err){
         throw boom.boomify(err);
