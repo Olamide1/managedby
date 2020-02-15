@@ -8,7 +8,10 @@
     <div v-if="loginbutton == true">
       <b-card title="Login to your ManagedBy Account">
       <b-card-text>
-      Some quick example text to build on the card title and make up the bulk of the card's content.
+      Office Manager? Used ManagedBy to receive,manage and record requests within the office. <br>
+      1. Create an account, <br>
+      2. add colleagues and <br>
+      3. recieve their requests on your dashboard
     </b-card-text>
     </b-card> <br>
     
@@ -23,6 +26,8 @@
       <p align="center">Don't have an account yet? <a @click="loginbutton = false">Signup</a></p>
     <h5 align="center" bgcolor="red">{{message}}</h5>
     </div>
+
+
     <div v-else>
       <b-card title="Signup in minutes">
       <b-card-text>
@@ -89,6 +94,7 @@ export default {
           sessionStorage.setItem('firstname', res.data[0].firstname)
           sessionStorage.setItem('company_email', res.data[0].company_email)
           sessionStorage.setItem('company_name', res.data[0].company_name)
+          sessionStorage.setItem('role', res.data[0].role)
           this.$router.push('/dashboard')
         }
       }).catch(err => {
@@ -122,7 +128,11 @@ export default {
         if (resp.data.message == "User's email exist") {
           this.message = "User already exist"
         } else {
-          this.message = 'Account created'
+          sessionStorage.setItem('firstname', this.firstname)
+          sessionStorage.setItem('company_email', this.company_email)
+          sessionStorage.setItem('company_name', this.company_name)
+          sessionStorage.setItem('role', this.role)
+          this.$router.push('/dashboard')
         }
       }).catch(err => {
         console.log(err)
