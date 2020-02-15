@@ -24,7 +24,7 @@ const routes = [
     {
         method: 'POST',
         url: '/api/username',
-        handler: userController.checkUsername
+        handler: userController.SearchByUsername
     }
 ]
 

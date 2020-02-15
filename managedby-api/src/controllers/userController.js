@@ -5,17 +5,21 @@ exports.login = async (req, reply) => {
     try {
         var company_email = req.body.company_email
         var password = req.body.password
-        const users = User.findOne({'company_email': company_email, 'password': password})
+        const users = User.find({
+            $and: [
+                {'company_email': company_email, 'password': password}
+            ]
+        })
         return users
     } catch(err) {
         throw boom.boomify(err);
     }
 }
 
-exports.checkUsername = async (req, reply) => {
+exports.SearchByUsername = async (req, reply) => {
     try {
-        let username = req.body.username;
-        var user = User.findOne({username})
+        let username =  req.body.username
+        var user = User.findOne({'username': username})
     return user
     } catch (err){
         throw boom.boomify(err);
@@ -23,8 +27,14 @@ exports.checkUsername = async (req, reply) => {
 }
 exports.signup = async (req, reply) => {
     try {
-        const user = new User(req.body)
-        return user.save()
+        let email =  req.body.company_email
+        var user = User.find({'company_email': email})
+        if ( (await user).length === 0) {
+            const signup = new User(req.body)
+            return signup.save()
+        } else {
+            return {"message": "User's email exist"}
+        }
     } catch (err) {
         throw boom.boomify(err);
     }
@@ -32,15 +42,13 @@ exports.signup = async (req, reply) => {
 
 exports.addEmployees = async (req, reply) => {
     try {
-       // var company_name = req.body.company_name
-       // var company_email = req.body.company_email
-       // var role = req.body.role
         const users = new User(req.body)
         return users.save()
     } catch(err){
         throw boom.boomify(err);
     }
-}
+} 
+
 
 exports.deleteUser = async (req, reply) => {
     try {
