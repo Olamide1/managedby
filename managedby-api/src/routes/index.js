@@ -1,4 +1,5 @@
 const userController = require('../controllers/userController');
+const requestController = require('../controllers/requestController')
 
 const routes = [
     {
@@ -25,6 +26,16 @@ const routes = [
         method: 'POST',
         url: '/api/companyname',
         handler: userController.SearchByCompany
+    },
+    {
+        method: 'POST',
+        url: '/api/addemployee',
+        handler: userController.addEmployees
+    },
+    {
+        method: 'GET',
+        url: '/api/getcompanyrequest',
+        handler: requestController.loadCompanyRequests  
     }
 ]
 

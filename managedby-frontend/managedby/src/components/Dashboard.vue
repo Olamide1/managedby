@@ -27,8 +27,9 @@
         <div class="card" style="width: 60%;">
             <div class="card-body">
                 <h5 class="card-title">Total requests for {{company_name}}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <p class="card-text">
+                        total request placed is {{total_request}}
+                    </p>
                 </div>
         </div>
 
@@ -39,9 +40,19 @@
        <b-form-group>
         <b-form-input placeholder="Firstname" v-model="firstname"></b-form-input>
       </b-form-group>
-      <b-button class="mt-3" variant="outline-dark" block>Add</b-button>
+      <p align="center">{{message}}</p>
+      <b-button class="mt-3" variant="outline-dark" block @click="addColleagues">Add</b-button>
     </b-modal>
+
+    <div>
+        <p align="center" v-if="requests.length == 0">No request Available</p>
+        <div v-for="(request, index) in requests" :key="index">
+
+         </div>
     </div>
+    </div>
+
+    
     <div v-else>
         <h3>For Employees</h3>
     </div>
@@ -50,6 +61,7 @@
 </template>
 <script>
 import { Slide } from 'vue-burger-menu'
+import axios from 'axios'
 export default {
     name: 'dashboard',
     components: {
@@ -58,10 +70,15 @@ export default {
     data(){
         return {
             company_name: sessionStorage.getItem('company_name'),
+            creator: sessionStorage.getItem('company_email'),
             name: sessionStorage.getItem('firstname'),
             role: sessionStorage.getItem('role'),
             company_email: '',
-            firstname: ''
+            firstname: '',
+            total_request: '',
+            message: '',
+            requests: [],
+            pin: sessionStorage.getItem('pin')
         }
     },
     methods: {
@@ -70,8 +87,44 @@ export default {
             this.$router.push('/')
         },
         loadCompanyRequest() {
-            console.log(this.role)
-            console.log(sessionStorage.getItem('firstname'))
+            axios.get('http://localhost:3000/api/getcompanyrequest', {
+                params: {
+                    company_name: this.company_name
+                }
+            }).then( resp => {
+                console.log(resp.data)
+                this.total_request = resp.data.length
+                this.requests = resp.data
+            }).catch( err => {
+                console.log(err)
+            })
+        },
+        addColleagues(){
+            var firstname = this.firstname
+            var role = 'User'
+            var company_name = this.company_name
+            var company_email = this.company_email
+            var creator = this.creator
+            var company_pin = this.pin
+            console.log(company_pin)
+
+            if(firstname == '' || company_email == '') {
+                this.message = 'Fill in data please'
+            } {
+                axios.post('http://localhost:3000/api/signup', {
+                firstname: firstname,
+                role: role,
+                company_email: company_email,
+                company_email: company_email,
+                creator: creator,
+                company_pin: company_pin
+            }).then(res => {
+                console.log(res.data)
+                this.requests = res.data
+            }).catch(err => {
+                console.log(err);
+            })
+            }
         },
         showModal() {
         this.$refs['my-modal'].show()
