@@ -4,10 +4,10 @@ const User = require('../models/Users')
 exports.login = async (req, reply) => {
     try {
         var company_email = req.body.company_email
-        var password = req.body.password
+        var pin = req.body.company_pin
         const users = User.find({
             $and: [
-                {'company_email': company_email, 'password': password}
+                {'company_email': company_email, 'company_pin': pin}
             ]
         })
         return users

@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid">
-          <div >
+          <div v-show="role == 'Admin'">
             <b-card>
             <b-card-body>
             <Slide width="200" noOverlay>

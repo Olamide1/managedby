@@ -16,7 +16,7 @@
 
             </Slide> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               
-                 {{company_name}} is ManagedBy <b>{{firstname}} | Dashboard</b>
+                 <span v-if="role == 'Admin'">{{company_name}} is ManagedBy <b>{{name}} | Dashboard</b></span>
                
             </b-card-body>
         </b-card>
@@ -33,10 +33,13 @@
         </div>
 
     <b-modal ref="my-modal" hide-footer title="Add colleagues">
-      <div class="d-block text-center">
-        <h3>Hello From My Modal!</h3>
-      </div>
-      <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button>
+      <b-form-group>
+        <b-form-input placeholder="Company Email" v-model="company_email" type="email"></b-form-input>
+      </b-form-group>
+       <b-form-group>
+        <b-form-input placeholder="Firstname" v-model="firstname"></b-form-input>
+      </b-form-group>
+      <b-button class="mt-3" variant="outline-dark" block>Add</b-button>
     </b-modal>
     </div>
     <div v-else>
@@ -54,9 +57,11 @@ export default {
     },
     data(){
         return {
-            firstname: sessionStorage.getItem('firstname'),
             company_name: sessionStorage.getItem('company_name'),
-            role: sessionStorage.getItem('role')
+            name: sessionStorage.getItem('firstname'),
+            role: sessionStorage.getItem('role'),
+            company_email: '',
+            firstname: ''
         }
     },
     methods: {
@@ -66,6 +71,7 @@ export default {
         },
         loadCompanyRequest() {
             console.log(this.role)
+            console.log(sessionStorage.getItem('firstname'))
         },
         showModal() {
         this.$refs['my-modal'].show()

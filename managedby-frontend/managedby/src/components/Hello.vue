@@ -6,12 +6,15 @@
       </b-navbar-brand>
     </b-navbar>
     <div v-if="loginbutton == true">
-      <b-card title="Login to your ManagedBy Account">
+      <b-card title="ManagedBy Login">
       <b-card-text>
-      Office Manager? Used ManagedBy to receive,manage and record requests within the office. <br>
-      1. Create an account, <br>
-      2. add colleagues and <br>
-      3. recieve their requests on your dashboard
+     <b> Office Managers can:</b> <br>
+      1. Add colleagues, <br>
+      2. Collect, Organise and Manage requests <br>
+     
+    <b> Colleagues can: </b><br>
+     1. Place requests. <br>
+     2. Track execution.
     </b-card-text>
     </b-card> <br>
     
@@ -20,7 +23,7 @@
       </b-form-group>
 
        <b-form-group>
-        <b-form-input placeholder="Password" v-model="password" type="password"></b-form-input>
+        <b-form-input placeholder="Company Pin" v-model="company_pin" type="password"></b-form-input>
       </b-form-group>
       <b-button block variant="outline-dark" @click="login" size="sm">Login</b-button>
       <p align="center">Don't have an account yet? <a @click="loginbutton = false">Signup</a></p>
@@ -29,15 +32,18 @@
 
 
     <div v-else>
-      <b-card title="Signup in minutes">
+      <b-card title="Office manager signup">
       <b-card-text>
-      Some quick example text to build on the card title and make up the bulk of the card's content.
+      Office Manager? Use ManagedBy to receive,manage and record requests within the office. Get started by: <br>
+      1. Creating an account, <br>
+      2. Adding colleagues and <br>
+      3. Collect & Organize their requests on your dashboard.
     </b-card-text>
     </b-card> <br>
 
   <b-form-group>
         <b-form-input placeholder="Firstname"  v-model="firstname"></b-form-input>
-         <b-form-input placeholder="Lastname"  v-model="lastname"></b-form-input>
+        <b-form-input placeholder="Lastname"  v-model="lastname"></b-form-input>
   </b-form-group>
 
     <b-form-group>
@@ -47,7 +53,7 @@
         <b-form-input placeholder="Company size using ranges (1-100)" v-model="company_size"></b-form-input>
     </b-form-group>
  <b-form-group>
-    <b-form-input placeholder="Password" v-model="password" type="password"></b-form-input>
+    <b-form-input placeholder="Company Pin" v-model="company_pin" type="password"></b-form-input>
   </b-form-group>
       <b-button block variant="outline-dark" size="sm" @click="signup">Signup</b-button>
     <h5 align="center" bgcolor="red">{{message}}</h5>
@@ -69,7 +75,7 @@ export default {
       lastname: '',
       company_email: '',
       industry: '',
-      password: '',
+      company_pin: '',
       message: '',
       company_name: '',
       company_size:'',
@@ -79,19 +85,19 @@ export default {
   methods: {
     login(){
       var company_email = this.company_email
-      var password = this.password
+      var password = this.company_pin
       if (company_email == '' || password == '') {
         this.message = 'Please fill in your data'
       } else {
         axios.post('http://localhost:3000/api/login', {
         company_email: company_email,
-        password: password
+        company_pin: password
       }).then( res => {
         if (res.data.length == 0) {
           this.message = 'Email or password in-correct'
         } else {
           console.log(res.data)
-          sessionStorage.setItem('firstname', res.data[0].firstname)
+          sessionStorage.setItem('firstname',res.data[0].firstname)
           sessionStorage.setItem('company_email', res.data[0].company_email)
           sessionStorage.setItem('company_name', res.data[0].company_name)
           sessionStorage.setItem('role', res.data[0].role)
@@ -109,7 +115,7 @@ export default {
       var company_name = this.company_name
       var industry = this.industry
       var company_size = this.company_size
-      var password = this.password
+      var password = this.company_pin
       var role = 'Admin'
       var creator = this.company_email
 
@@ -122,16 +128,16 @@ export default {
         industry: industry,
         role: role,
         creator: creator,
-        password: password
+        company_pin: password
       }).then( resp => {
         console.log(resp.data)
         if (resp.data.message == "User's email exist") {
           this.message = "User already exist"
         } else {
-          sessionStorage.setItem('firstname', this.firstname)
+          sessionStorage.setItem('firstname', firstname)
           sessionStorage.setItem('company_email', this.company_email)
           sessionStorage.setItem('company_name', this.company_name)
-          sessionStorage.setItem('role', this.role)
+          sessionStorage.setItem('role', 'Admin')
           this.$router.push('/dashboard')
         }
       }).catch(err => {
