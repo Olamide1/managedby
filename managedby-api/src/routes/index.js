@@ -36,6 +36,16 @@ const routes = [
         method: 'GET',
         url: '/api/getcompanyrequest',
         handler: requestController.loadCompanyRequests  
+    },
+    {
+        method: 'POST',
+        url: '/api/createrequest',
+        handler: requestController.createRequest
+    },
+    {
+        method: 'GET',
+        url: '/api/myrequests',
+        handler: requestController.findMyRequests
     }
 ]
 

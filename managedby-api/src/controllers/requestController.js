@@ -18,3 +18,11 @@ exports.loadCompanyRequests = async(req, reply)=> {
         throw boom.boomify(err)
     }
 }
+exports.findMyRequests = async(req, reply) => {
+    try {
+        const myrequest = Requests.find({'company_email': req.params.company_email})
+        return myrequest
+    }catch(err){
+        throw boom.boomify(err)
+    }
+}

@@ -44,15 +44,26 @@
       <b-button class="mt-3" variant="outline-dark" block @click="addColleagues">Add</b-button>
     </b-modal>
 
-    <div>
-        <p align="center" v-if="requests.length == 0">No request Available</p>
+    <table class="table">
+        <p align="center" v-if="requests.length == 0">No requests available</p>
         <div v-for="(request, index) in requests" :key="index">
-
+            <thead>
+                <tr>
+                 <th scope="col">By</th>
+                 <th scope="col">Area</th>
+                 <th scope="col">Category</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>{{request.request_by}}</td>
+                <td>{{request.area}}</td>
+                <td>{{request.category}}</td>
+            </tr>
          </div>
-    </div>
+    </table>
     </div>
 
-    
+
     <div v-else>
         <h3>For Employees</h3>
     </div>
