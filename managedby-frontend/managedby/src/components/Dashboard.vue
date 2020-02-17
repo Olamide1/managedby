@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid">
-        <div >
+        <div>
             <b-card>
             <b-card-body>
             <Slide width="200" noOverlay>
@@ -44,9 +44,9 @@
       <b-button class="mt-3" variant="outline-dark" block @click="addColleagues">Add</b-button>
     </b-modal>
 
-    <table class="table" align="center">
+    <table class="table">
         <p align="center" v-if="requests.length == 0">No requests available</p>
-        <div>
+        <div v-show="this.requests.length >= 1">
             <thead>
                 <tr>
                  <th scope="col">By</th>
@@ -65,17 +65,46 @@
 
 
     <div v-else>
-        <b-button variant="outline-dark" align="center" @click="showModalTwo">Place request</b-button><br><br>
+        <b-button variant="outline-dark" align="center" @click="showModalTwo">Submit request</b-button><br><br>
         <b-modal ref="modal-two" hide-footer title="Place request">
       <b-form-group>
-        <b-form-input placeholder="Company Email"></b-form-input>
+        <b-form-input placeholder="Category (repairs, replacement)" v-model="category"></b-form-input>
       </b-form-group>
        <b-form-group>
-        <b-form-input placeholder="Firstname" ></b-form-input>
+        <b-form-input placeholder="Area (could be dept, apartment number etc" v-model="area"></b-form-input>
+      </b-form-group>
+      <b-form-group>
+        <b-form-textarea placeholder="Request" v-model="request"></b-form-textarea>
       </b-form-group>
       <p align="center">{{message}}</p>
-      <b-button class="mt-3" variant="outline-dark" block>Add</b-button>
+      <b-button class="mt-3" variant="outline-dark" block>Submit</b-button>
     </b-modal>
+    <div class="card" style="width: 60%;">
+            <div class="card-body">
+                <h5 class="card-title">Total requests by {{name}}</h5>
+                    <p class="card-text">
+                        total request placed is {{total_request}}
+                    </p>
+                </div>
+        </div>
+
+    <table class="table">
+        <p align="center" v-if="requests.length == 0">You have not placed any request yet</p>
+        <div v-show="this.requests.length >= 1">
+            <thead>
+                <tr>
+                 <th scope="col">By</th>
+                 <th scope="col">Area</th>
+                 <th scope="col">Category</th>
+                </tr>
+            </thead>
+            <tr v-for="(request, index) in requests" :key="index">
+                <td>{{request.request_by}}</td>
+                <td>{{request.area}}</td>
+                <td>{{request.category}}</td>
+            </tr>
+         </div>
+    </table>
     </div>
 
     </div>
@@ -91,11 +120,15 @@ export default {
     data(){
         return {
             company_name: sessionStorage.getItem('company_name'),
-            creator: sessionStorage.getItem('company_email'),
+            creator: sessionStorage.getItem('created_by'),
+            my_email: sessionStorage.getItem('company_email'),
             name: sessionStorage.getItem('firstname'),
             role: sessionStorage.getItem('role'),
             company_email: '',
             firstname: '',
+            category: '',
+            area:'',
+            request: '',
             total_request: '',
             message: '',
             requests: [],
@@ -118,6 +151,11 @@ export default {
             }).catch( err => {
                 console.log(err)
             })
+        },
+        createRequest(){
+            var request = this.request
+            var category = this.category
+            var area = this.area
         },
         addColleagues(){
             var firstname = this.firstname
@@ -155,9 +193,23 @@ export default {
       hideModal() {
         this.$refs['my-modal'].hide()
       },
+      findMyRequest(){
+          axios.get('http://localhost:3000/api/myrequests', {
+              params: {
+                  company_email: this.my_email
+              }
+          }).then( response => {
+              console.log(response.data)
+              this.requests = response.data
+              this.total_request = response.data.length
+          }).catch(err => {
+              console.log(err)
+          })
+      }
     },
     mounted(){
         this.loadCompanyRequest()
+        this.findMyRequest()
     }
 }
 </script>
