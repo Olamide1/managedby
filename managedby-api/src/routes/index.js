@@ -46,6 +46,11 @@ const routes = [
         method: 'GET',
         url: '/api/myrequests',
         handler: requestController.findMyRequests
+    },
+    {
+        method: 'POST',
+        url: '/api/coll',
+        handler: userController.searchByCreatedBy
     }
 ]
 

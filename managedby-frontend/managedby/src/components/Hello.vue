@@ -102,6 +102,7 @@ export default {
           sessionStorage.setItem('company_name', res.data[0].company_name)
           sessionStorage.setItem('role', res.data[0].role)
           sessionStorage.setItem('pin', res.data[0].company_pin)
+          sessionStorage.setItem('created_by', res.data[0].creator)
           this.$router.push('/dashboard')
         }
       }).catch(err => {
@@ -140,6 +141,7 @@ export default {
           sessionStorage.setItem('company_name', this.company_name)
           sessionStorage.setItem('role', 'Admin')
           sessionStorage.setItem('pin', this.company_pin)
+          sessionStorage.setItem('created_by', this.creator)
           this.$router.push('/dashboard')
         }
       }).catch(err => {

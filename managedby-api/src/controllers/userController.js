@@ -25,6 +25,16 @@ exports.SearchByCompany = async (req, reply) => {
         throw boom.boomify(err);
     }
 }
+
+exports.searchByCreatedBy = async(req, reply) => {
+    try{
+        let creator = req.body.creator
+        var user = User.find({'creator': creator})
+        return user
+    } catch(err){
+        throw boom.boomify(err)
+    }
+}
 exports.signup = async (req, reply) => {
     try {
         let email =  req.body.company_email

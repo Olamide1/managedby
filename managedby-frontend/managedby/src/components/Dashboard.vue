@@ -17,7 +17,7 @@
             </Slide> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               
                  <span v-if="role == 'Admin'">{{company_name}} is ManagedBy <b>{{name}} | Dashboard</b></span>
-               
+                <span v-else>Welcome, <b>{{name}}.</b></span>
             </b-card-body>
         </b-card>
         </div>
@@ -44,9 +44,9 @@
       <b-button class="mt-3" variant="outline-dark" block @click="addColleagues">Add</b-button>
     </b-modal>
 
-    <table class="table">
+    <table class="table" align="center">
         <p align="center" v-if="requests.length == 0">No requests available</p>
-        <div v-for="(request, index) in requests" :key="index">
+        <div>
             <thead>
                 <tr>
                  <th scope="col">By</th>
@@ -54,7 +54,7 @@
                  <th scope="col">Category</th>
                 </tr>
             </thead>
-            <tr>
+            <tr v-for="(request, index) in requests" :key="index">
                 <td>{{request.request_by}}</td>
                 <td>{{request.area}}</td>
                 <td>{{request.category}}</td>
@@ -65,7 +65,17 @@
 
 
     <div v-else>
-        <h3>For Employees</h3>
+        <b-button variant="outline-dark" align="center" @click="showModalTwo">Place request</b-button><br><br>
+        <b-modal ref="modal-two" hide-footer title="Place request">
+      <b-form-group>
+        <b-form-input placeholder="Company Email"></b-form-input>
+      </b-form-group>
+       <b-form-group>
+        <b-form-input placeholder="Firstname" ></b-form-input>
+      </b-form-group>
+      <p align="center">{{message}}</p>
+      <b-button class="mt-3" variant="outline-dark" block>Add</b-button>
+    </b-modal>
     </div>
 
     </div>
@@ -103,7 +113,6 @@ export default {
                     company_name: this.company_name
                 }
             }).then( resp => {
-                console.log(resp.data)
                 this.total_request = resp.data.length
                 this.requests = resp.data
             }).catch( err => {
@@ -136,6 +145,9 @@ export default {
                 console.log(err);
             })
             }
+        },
+        showModalTwo(){
+            this.$refs['modal-two'].show()
         },
         showModal() {
         this.$refs['my-modal'].show()
