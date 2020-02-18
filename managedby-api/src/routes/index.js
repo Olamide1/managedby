@@ -33,7 +33,7 @@ const routes = [
         handler: userController.addEmployees
     },
     {
-        method: 'GET',
+        method: 'POST',
         url: '/api/getcompanyrequest',
         handler: requestController.loadCompanyRequests  
     },
@@ -43,7 +43,7 @@ const routes = [
         handler: requestController.createRequest
     },
     {
-        method: 'GET',
+        method: 'POST',
         url: '/api/myrequests',
         handler: requestController.findMyRequests
     },
@@ -51,6 +51,16 @@ const routes = [
         method: 'POST',
         url: '/api/coll',
         handler: userController.searchByCreatedBy
+    },
+    {
+        method: 'POST',
+        url: '/api/deleterequest',
+        handler: requestController.deleteRequest
+    }, 
+    {
+        method: 'POST',
+        url: '/api/findrequestsbyid',
+        handler: requestController.findById
     }
 ]
 

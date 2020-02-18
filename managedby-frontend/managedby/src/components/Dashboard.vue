@@ -51,29 +51,35 @@
     <table class="table">
         <p align="center" v-if="requests.length == 0">No requests available</p>
         <div v-show="this.requests.length >= 1">
-            <div v-for="(request, index) in requests" :key="index">
-                <thead>
+            <thead>
                 <tr>
-                 <th scope="col">Request By</th>
                  <th scope="col">Area</th>
                  <th scope="col">Category</th>
                  <th scope="col">Status</th>
+                 <th scope="col">Details</th>
                 </tr>
             </thead>
-            <tr  @click="$bvToast.show('example-toast')">
-                <td>{{request.request_by}}</td>
+            <tbody v-for="(request, index) in requests" :key="index">
+            <tr>
                 <td>{{request.area}}</td>
                 <td>{{request.category}}</td>
-                <td v-if="request.status == 'todo'" class="badge badge-danger">todo</td>
-                <td v-else>Done</td>
+           <td>
+               <span v-if="request.status == 'todo'" class="badge badge-danger">Todo</span>
+                <span v-else class="badge badge-info">Done</span>
+           </td>
+           <td align="center" v-b-modal.modal-1><b-icon-chevron-down></b-icon-chevron-down></td>
             </tr>
-            <b-toast id="example-toast" title="Mark as" static no-auto-hide>
+            <b-modal id="modal-1" title="Mark as" hide-footer>
+               <div class="container">
+                    <p> Request detail:  {{request.request}}</p>
+                    <p>By: {{request.request_by}} </p>
+               </div>
                     <ul class="list-group">
                         <li class="list-group-item">Done</li>
                         <li class="list-group-item">Doing</li>
                     </ul>
-            </b-toast>
-            </div>
+            </b-modal>
+            </tbody>
          </div>
     </table>
     </div>
@@ -100,36 +106,39 @@
             <div class="card-body">
                 <h5 class="card-title">Total requests by {{name}}</h5>
                     <p class="card-text">
-                        total request placed is {{total_request}}
+                        total request placed is {{my_total_request}}
                     </p>
                 </div>
         </div>
 
     <table class="table">
-        <p align="center" v-if="requests.length == 0">You have not placed any request yet</p>
-        <div v-show="this.requests.length >= 1">
-            <div v-for="(request, index) in requests" :key="index">
-            <thead>
+        <p align="center" v-if="my_requests.length == 0">You have not placed any request yet</p>
+        <div v-show="this.my_requests.length >= 1">
+              <thead>
                 <tr>
                  <th scope="col">Status</th>
                  <th scope="col">Area</th>
                  <th scope="col">Category</th>
-                 <th>Action</th>
+                 <th scope="col">Action</th>
                 </tr>
             </thead>
+            <tbody v-for="(my_request, index) in my_requests" :key="index">
             <tr>
-                <td>{{request.status}}</td>
-                <td>{{request.area}}</td>
-                <td>{{request.category}}</td>
-                <td><button @click="$bvToast.show('example-toast')" class="btn btn-outline-dark">Action</button></td>
+                <td>
+               <span v-if="my_request.status == 'todo'" class="badge badge-danger">Todo</span>
+                <span v-else class="badge badge-info">Done</span>
+                </td>
+                <td>{{my_request.area}}</td>
+                <td>{{my_request.category}}</td>
+                 <td><button v-b-modal.modal-1 class="btn btn-outline-dark">Action</button></td>
+                 
+            <b-modal id="modal-1" title="Action" hide-footer>
+                   <p> {{my_request.request}} </p> 
+                    <br>
+                    <button class="btn btn-outline-dark" @click="deleteRequest(my_request._id, index)">Delete</button>
+            </b-modal>  
             </tr>
-
-                <b-toast id="example-toast" title="Actions" static no-auto-hide>
-                   <ul class="list-group">
-                       <li class="list-group-item">Delete</li>
-                   </ul>
-                </b-toast>
-            </div>
+            </tbody>
          </div>
     </table>
     </div>
@@ -155,10 +164,12 @@ export default {
             firstname: '',
             category: '',
             area:'',
+            my_total_request: '',
             request: '',
             total_request: '',
             message: '',
             requests: [],
+            my_requests: [],
             pin: sessionStorage.getItem('pin')
         }
     },
@@ -168,16 +179,17 @@ export default {
             this.$router.push('/')
         },
         loadCompanyRequest() {
-            axios.get('http://localhost:3000/api/getcompanyrequest', {
-                params: {
+            axios.post('http://localhost:3000/api/getcompanyrequest', {
                     company_name: this.company_name
-                }
             }).then( resp => {
                 this.total_request = resp.data.length
                 this.requests = resp.data
             }).catch( err => {
                 console.log(err)
             })
+        },
+        findById(){
+            console.log('find by id')
         },
         createRequest(){
             var request = this.request
@@ -199,11 +211,23 @@ export default {
                     company_name: company_name
                 }).then(response => {
                     console.log(response.data)
-                    this.requests.push({'status': status, 'category': category, 'area': area})
+                    this.my_requests.push({'status': status, 'category': category, 'area': area, 'request': request})
                 }).catch(err => {
                     console.log(err)
                 })
             }
+        },
+        deleteRequest(id, index){
+            var identify = id
+            var i = index
+            axios.post('http://localhost:3000/api/deleterequest', {
+                id: identify
+            }).then( resp => {
+                this.requests.splice(i, 1);
+                this.total_request = this.requests.length
+            }).catch(err => {
+                console.log(err)
+            })
         },
         addColleagues(){
             var firstname = this.firstname
@@ -220,7 +244,7 @@ export default {
                 axios.post('http://localhost:3000/api/signup', {
                 firstname: firstname,
                 role: role,
-                company_email: company_email,
+                company_name: company_name,
                 company_email: company_email,
                 creator: creator,
                 company_pin: company_pin
@@ -242,14 +266,12 @@ export default {
         this.$refs['my-modal'].hide()
       },
       findMyRequest(){
-          axios.get('http://localhost:3000/api/myrequests', {
-              params: {
-                  company_email: this.my_email
-              }
+          axios.post('http://localhost:3000/api/myrequests', {
+                  request_by: this.my_email
           }).then( response => {
               console.log(response.data)
-              this.requests = response.data
-              this.total_request = response.data.length
+              this.my_requests = response.data
+              this.my_total_request = response.data.length
           }).catch(err => {
               console.log(err)
           })

@@ -12,7 +12,7 @@ exports.createRequest = async(req, reply)=> {
 
 exports.loadCompanyRequests = async(req, reply)=> {
     try{
-        const requests = Requests.find({'company_name': req.params.company_name})
+        const requests = Requests.find({'company_name': req.body.company_name})
         return requests
     } catch(err){
         throw boom.boomify(err)
@@ -20,9 +20,29 @@ exports.loadCompanyRequests = async(req, reply)=> {
 }
 exports.findMyRequests = async(req, reply) => {
     try {
-        const myrequest = Requests.find({'company_email': req.params.company_email})
+        const myrequest = Requests.find({'request_by': req.body.request_by})
         return myrequest
     }catch(err){
+        throw boom.boomify(err)
+    }
+}
+
+exports.findById = async (req, reply) => {
+    try {
+        var id = req.body.id
+        const finder = Requests.findById(id)
+        return finder
+    } catch(err){
+        throw boom.boomify(err)
+    }
+}
+
+exports.deleteRequest = async (req, reply) => {
+    try {
+        const id = req.body.id
+        const deleteRequest = Requests.findByIdAndRemove(id)
+        return deleteRequest
+    } catch(err){
         throw boom.boomify(err)
     }
 }

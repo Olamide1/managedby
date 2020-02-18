@@ -25,21 +25,32 @@
         </div>
 <br>
 
-<table class="table" align="center">
+<table class="table">
         <p align="center" v-if="persons.length == 0">No colleagues added</p>
-        <div>
-            <thead>
+        <div v-show="this.persons.length >= 1">
+            <div>
+                <thead>
                 <tr>
                  <th scope="col">Name</th>
                  <th scope="col">Email</th>
-                 <th scope="col">Role</th>
+                 <th>Action</th>
                 </tr>
             </thead>
-            <tr v-for="(person, index) in persons" :key="index">
+            <tbody v-for="(person, index) in persons" :key="index">
+                <tr>
                 <td>{{person.firstname}}</td>
                 <td>{{person.company_email}}</td>
-                <td>{{person.role}}</td>
-            </tr>
+                <td v-if="person.role == 'User'" v-b-modal.modal-1 align="center"><b-icon-chevron-down></b-icon-chevron-down></td>
+                </tr>
+
+             <b-modal id="modal-1" title="Actions" hide-footer>
+                 <p>ROLE: {{person.role}}</p>
+                   <ul class="list-group">
+                       <li class="btn btn-outline-danger" @click="deleteUser(person._id, index)">Delete</li>
+                   </ul>
+            </b-modal>
+            </tbody>
+            </div>
          </div>
     </table>
     </div>
@@ -58,13 +69,23 @@ export default {
             company_name: sessionStorage.getItem('company_name'),
             role: sessionStorage.getItem('role'),
             creator: sessionStorage.getItem('company_email'),
-            persons: []
+            persons: [],
+            total_persons: '',
+            forindex: 0
         }
     },
     methods: {
         logout () {
             sessionStorage.clear();
             this.$router.push('/')
+        },
+        deleteUser (id, index) {
+            axios.post('http://localhost:3000/api/deleteuser', {
+                id: id
+            }).then( resp => {
+                this.persons.splice(index, 1);
+                this.total_persons = this.persons.length
+            })
         },
         getCreatedBy () {
             console.log(this.creator)
