@@ -11,6 +11,9 @@
             <router-link to="/users" v-show="role == 'Admin'">
                 <span>Colleagues</span>
             </router-link>
+            <router-link to="/todo" v-show="role == 'Admin'">
+                <span>Todo</span>
+            </router-link>
             
             <a @click="logout"><span>Logout</span></a>
 
@@ -22,6 +25,7 @@
         </b-card>
         </div>
 <br>
+<!-- Admin section -->
     <div v-if="role == 'Admin'">
         <b-button variant="outline-dark" align="center" @click="showModal">Add Colleagues</b-button> <br><br>
         <div class="card" style="width: 60%;">
@@ -43,26 +47,39 @@
       <p align="center">{{message}}</p>
       <b-button class="mt-3" variant="outline-dark" block @click="addColleagues">Add</b-button>
     </b-modal>
-
+<br>
     <table class="table">
         <p align="center" v-if="requests.length == 0">No requests available</p>
         <div v-show="this.requests.length >= 1">
-            <thead>
+            <div v-for="(request, index) in requests" :key="index">
+                <thead>
                 <tr>
-                 <th scope="col">By</th>
+                 <th scope="col">Request By</th>
                  <th scope="col">Area</th>
                  <th scope="col">Category</th>
+                 <th scope="col">Status</th>
                 </tr>
             </thead>
-            <tr v-for="(request, index) in requests" :key="index">
+            <tr  @click="$bvToast.show('example-toast')">
                 <td>{{request.request_by}}</td>
                 <td>{{request.area}}</td>
                 <td>{{request.category}}</td>
+                <td v-if="request.status == 'todo'" class="badge badge-danger">todo</td>
+                <td v-else>Done</td>
             </tr>
+            <b-toast id="example-toast" title="Mark as" static no-auto-hide>
+                    <ul class="list-group">
+                        <li class="list-group-item">Done</li>
+                        <li class="list-group-item">Doing</li>
+                    </ul>
+            </b-toast>
+            </div>
          </div>
     </table>
     </div>
+<!-- End of Admin Section -->
 
+<!-- User section -->
 
     <div v-else>
         <b-button variant="outline-dark" align="center" @click="showModalTwo">Submit request</b-button><br><br>
@@ -77,7 +94,7 @@
         <b-form-textarea placeholder="Request" v-model="request"></b-form-textarea>
       </b-form-group>
       <p align="center">{{message}}</p>
-      <b-button class="mt-3" variant="outline-dark" block>Submit</b-button>
+      <b-button class="mt-3" variant="outline-dark" block @click="createRequest">Submit</b-button>
     </b-modal>
     <div class="card" style="width: 60%;">
             <div class="card-body">
@@ -91,22 +108,32 @@
     <table class="table">
         <p align="center" v-if="requests.length == 0">You have not placed any request yet</p>
         <div v-show="this.requests.length >= 1">
+            <div v-for="(request, index) in requests" :key="index">
             <thead>
                 <tr>
-                 <th scope="col">By</th>
+                 <th scope="col">Status</th>
                  <th scope="col">Area</th>
                  <th scope="col">Category</th>
+                 <th>Action</th>
                 </tr>
             </thead>
-            <tr v-for="(request, index) in requests" :key="index">
-                <td>{{request.request_by}}</td>
+            <tr>
+                <td>{{request.status}}</td>
                 <td>{{request.area}}</td>
                 <td>{{request.category}}</td>
+                <td><button @click="$bvToast.show('example-toast')" class="btn btn-outline-dark">Action</button></td>
             </tr>
+
+                <b-toast id="example-toast" title="Actions" static no-auto-hide>
+                   <ul class="list-group">
+                       <li class="list-group-item">Delete</li>
+                   </ul>
+                </b-toast>
+            </div>
          </div>
     </table>
     </div>
-
+<!-- End of user section -->
     </div>
 </template>
 <script>
@@ -156,6 +183,27 @@ export default {
             var request = this.request
             var category = this.category
             var area = this.area
+            var request_by = this.my_email
+            var status = 'todo'
+            var company_name = this.company_name
+
+            if (request == ''|| category == '' || area == '') {
+                this.message = 'Plese fill the forms'
+            } else {
+                axios.post('http://localhost:3000/api/createrequest', {
+                    request: request,
+                    category: category,
+                    area: area,
+                    request_by: request_by,
+                    status: status,
+                    company_name: company_name
+                }).then(response => {
+                    console.log(response.data)
+                    this.requests.push({'status': status, 'category': category, 'area': area})
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
         },
         addColleagues(){
             var firstname = this.firstname
@@ -178,7 +226,7 @@ export default {
                 company_pin: company_pin
             }).then(res => {
                 console.log(res.data)
-                this.requests = res.data
+
             }).catch(err => {
                 console.log(err);
             })

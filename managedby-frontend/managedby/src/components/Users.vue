@@ -11,7 +11,9 @@
             <router-link to="/users" v-show="role == 'Admin'">
                 <span>Colleagues</span>
             </router-link>
-            
+            <router-link to="/todo" v-show="role == 'Admin'">
+                <span>Todo</span>
+            </router-link>
             <a @click="logout"><span>Logout</span></a>
 
             </Slide> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
