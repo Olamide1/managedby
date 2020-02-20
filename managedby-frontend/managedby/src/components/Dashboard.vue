@@ -67,18 +67,19 @@
                <span v-if="request.status == 'todo'" class="badge badge-danger">Todo</span>
                 <span v-else class="badge badge-info">Done</span>
            </td>
-           <td align="center" v-b-modal.modal-1><b-icon-chevron-down></b-icon-chevron-down></td>
-            </tr>
-            <b-modal id="modal-1" title="Mark as" hide-footer>
-               <div class="container">
-                    <p> Request detail:  {{request.request}}</p>
-                    <p>By: {{request.request_by}} </p>
-               </div>
-                    <ul class="list-group">
+           <td align="center">
+               <b-dropdown id="dropdown-2" variant="dark-outline">
+               <b-dropdown-header>
+                    Request Details <br>
+                By: {{request.request_by}}
+               </b-dropdown-header>
+               <b-dropdown-item> Item: {{request.request}}</b-dropdown-item>
+                    <b-dropdown-item class="list-group">
                         <li class="list-group-item">Done</li>
                         <li class="list-group-item">Doing</li>
-                    </ul>
-            </b-modal>
+                    </b-dropdown-item>
+            </b-dropdown></td>
+            </tr>
             </tbody>
          </div>
     </table>
@@ -130,15 +131,16 @@
                 </td>
                 <td>{{my_request.area}}</td>
                 <td>{{my_request.category}}</td>
-                 <td><button v-b-modal.modal-1 class="btn btn-outline-dark">Action</button></td>
-                 
-            <b-modal id="modal-1" title="Action" hide-footer>
-                   <p> {{my_request.request}} </p> 
-                    <br>
-                    <button class="btn btn-outline-dark" @click="deleteRequest(my_request._id, index)">Delete</button>
-            </b-modal>  
+                 <td>
+                    <b-dropdown id="dropdown-1" variant="dark-outline">
+                        <b-dropdown-header>Request Details </b-dropdown-header> 
+                        <b-dropdown-item>{{my_request.request}}</b-dropdown-item>
+                         <b-dropdown-item><button class="btn btn-outline-dark" @click="deleteRequest(my_request._id, index)">Delete</button></b-dropdown-item>
+                     </b-dropdown>
+                </td>  
             </tr>
             </tbody>
+            
          </div>
     </table>
     </div>
@@ -164,6 +166,7 @@ export default {
             firstname: '',
             category: '',
             area:'',
+            indie: [],
             my_total_request: '',
             request: '',
             total_request: '',
@@ -187,9 +190,6 @@ export default {
             }).catch( err => {
                 console.log(err)
             })
-        },
-        findById(){
-            console.log('find by id')
         },
         createRequest(){
             var request = this.request
@@ -223,7 +223,7 @@ export default {
             axios.post('http://localhost:3000/api/deleterequest', {
                 id: identify
             }).then( resp => {
-                this.requests.splice(i, 1);
+                this.my_requests.splice(i, 1);
                 this.total_request = this.requests.length
             }).catch(err => {
                 console.log(err)

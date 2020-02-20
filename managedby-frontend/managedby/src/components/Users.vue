@@ -36,19 +36,19 @@
                  <th>Action</th>
                 </tr>
             </thead>
-            <tbody v-for="(person, index) in persons" :key="index">
+            <tbody v-for="(person, index) in persons" :key="index" align="center">
                 <tr>
                 <td>{{person.firstname}}</td>
                 <td>{{person.company_email}}</td>
-                <td v-if="person.role == 'User'" v-b-modal.modal-1 align="center"><b-icon-chevron-down></b-icon-chevron-down></td>
+                <td v-if="person.role == 'User'" align="center">
+                    <b-dropdown id="dropdown-1" variant="dark-outline">
+                        <b-dropdown-header><h4>ROLE: {{person.role}}</h4></b-dropdown-header>
+                        <b-dropdown-item class="list-group">
+                             <li class="btn btn-outline-danger" @click="deleteUser(person._id, index)">Delete</li>
+                        </b-dropdown-item>
+                    </b-dropdown>
+                    </td>
                 </tr>
-
-             <b-modal id="modal-1" title="Actions" hide-footer>
-                 <p>ROLE: {{person.role}}</p>
-                   <ul class="list-group">
-                       <li class="btn btn-outline-danger" @click="deleteUser(person._id, index)">Delete</li>
-                   </ul>
-            </b-modal>
             </tbody>
             </div>
          </div>
