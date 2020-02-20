@@ -48,7 +48,7 @@
       <b-button class="mt-3" variant="outline-dark" block @click="addColleagues">Add</b-button>
     </b-modal>
 <br>
-    <table class="table">
+    <table class="table scroll">
         <p align="center" v-if="requests.length == 0">No requests available</p>
         <div v-show="this.requests.length >= 1">
             <thead>
@@ -65,19 +65,20 @@
                 <td>{{request.category}}</td>
            <td>
                <span v-if="request.status == 'todo'" class="badge badge-danger">Todo</span>
-                <span v-else class="badge badge-info">Done</span>
+                <span v-else-if="request.status == 'doing'" class="badge badge-primary">Done</span>
+                <span v-else class="badge badge-info"> Done</span>
            </td>
            <td align="center">
-               <b-dropdown id="dropdown-2" variant="dark-outline">
+               <b-dropdown id="dropdown" dropright variant="outline-dark">
                <b-dropdown-header>
-                    Request Details <br>
-                By: {{request.request_by}}
+                    <b>Request Details </b>
+                By: {{request.request_by}} <br>
+                 {{request.request}}
                </b-dropdown-header>
-               <b-dropdown-item> Item: {{request.request}}</b-dropdown-item>
-                    <b-dropdown-item class="list-group">
-                        <li class="list-group-item">Done</li>
-                        <li class="list-group-item">Doing</li>
-                    </b-dropdown-item>
+               <b-dropdown-item>
+                  <button class="btn btn-outline-dark" @click="load">Done</button>
+                  <button class="btn btn-outline-dark">Doing</button>
+               </b-dropdown-item>
             </b-dropdown></td>
             </tr>
             </tbody>
@@ -88,7 +89,7 @@
 
 <!-- User section -->
 
-    <div v-else>
+    <div v-else class="container-fluid scroll">
         <b-button variant="outline-dark" align="center" @click="showModalTwo">Submit request</b-button><br><br>
         <b-modal ref="modal-two" hide-footer title="Place request">
       <b-form-group>
@@ -112,7 +113,7 @@
                 </div>
         </div>
 
-    <table class="table">
+    <table class="table scroll">
         <p align="center" v-if="my_requests.length == 0">You have not placed any request yet</p>
         <div v-show="this.my_requests.length >= 1">
               <thead>
@@ -132,7 +133,7 @@
                 <td>{{my_request.area}}</td>
                 <td>{{my_request.category}}</td>
                  <td>
-                    <b-dropdown id="dropdown-1" variant="dark-outline">
+                    <b-dropdown id="dropdown-1" dropright  variant="outline-dark">
                         <b-dropdown-header>Request Details </b-dropdown-header> 
                         <b-dropdown-item>{{my_request.request}}</b-dropdown-item>
                          <b-dropdown-item><button class="btn btn-outline-dark" @click="deleteRequest(my_request._id, index)">Delete</button></b-dropdown-item>
@@ -181,6 +182,9 @@ export default {
             sessionStorage.clear();
             this.$router.push('/')
         },
+        load(){
+            console.log('hello')
+        },
         loadCompanyRequest() {
             axios.post('http://localhost:3000/api/getcompanyrequest', {
                     company_name: this.company_name
@@ -212,6 +216,7 @@ export default {
                 }).then(response => {
                     console.log(response.data)
                     this.my_requests.push({'status': status, 'category': category, 'area': area, 'request': request})
+                    this.hideModal()
                 }).catch(err => {
                     console.log(err)
                 })
@@ -286,5 +291,11 @@ export default {
 <style>
     @media (min-width: 600px) {
   .container-fluid { width: 90%; }
+}
+.break {
+     overflow-wrap: break-word;
+}
+.scroll {
+    overflow: hidden;
 }
 </style>

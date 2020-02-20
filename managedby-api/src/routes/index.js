@@ -61,7 +61,13 @@ const routes = [
         method: 'POST',
         url: '/api/findrequestsbyid',
         handler: requestController.findById
+    },
+    {
+        method: 'POST',
+        url: '/api/findundone',
+        handler: requestController.findUndoneRequests
     }
+
 ]
 
 module.exports = routes

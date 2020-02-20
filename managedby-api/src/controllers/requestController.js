@@ -27,6 +27,23 @@ exports.findMyRequests = async(req, reply) => {
     }
 }
 
+exports.findUndoneRequests = async (req, reply)=> {
+    try {
+
+        var company_name = req.body.company_name
+        var status = req.body.status
+        const request = Requests.find({
+            $and: [
+                {'company_name': company_name, 'status': status}
+            ]
+        })
+        return request
+
+    } catch(err) {
+        throw boom.boomify(err)
+    }
+}
+
 exports.findById = async (req, reply) => {
     try {
         var id = req.body.id

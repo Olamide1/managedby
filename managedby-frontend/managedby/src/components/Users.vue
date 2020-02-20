@@ -41,10 +41,10 @@
                 <td>{{person.firstname}}</td>
                 <td>{{person.company_email}}</td>
                 <td v-if="person.role == 'User'" align="center">
-                    <b-dropdown id="dropdown-1" variant="dark-outline">
-                        <b-dropdown-header><h4>ROLE: {{person.role}}</h4></b-dropdown-header>
+                    <b-dropdown id="dropdown-1" dropright variant="dark-outline">
+                        <b-dropdown-header><h5>ROLE: {{person.role}}</h5></b-dropdown-header>
                         <b-dropdown-item class="list-group">
-                             <li class="btn btn-outline-danger" @click="deleteUser(person._id, index)">Delete</li>
+                             <button class="btn btn-outline-danger" @click="deleteUser(person._id, index)">Delete</button>
                         </b-dropdown-item>
                     </b-dropdown>
                     </td>
