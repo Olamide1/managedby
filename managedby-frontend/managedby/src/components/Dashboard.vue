@@ -241,11 +241,11 @@ export default {
             var company_email = this.company_email
             var creator = this.creator
             var company_pin = this.pin
-            console.log(company_pin)
+            console.log(creator)
 
             if(firstname == '' || company_email == '') {
                 this.message = 'Fill in data please'
-            } {
+            } else {
                 axios.post('http://localhost:3000/api/signup', {
                 firstname: firstname,
                 role: role,
@@ -255,10 +255,14 @@ export default {
                 company_pin: company_pin
             }).then(res => {
                 console.log(res.data)
-
+                if (res.data.message == "User's email exist"){
+                    this.message = 'User had been added before.'
+                } else {
+                    this.hideModal();
+                }
             }).catch(err => {
                 console.log(err);
-            })
+            }) 
             }
         },
         showModalTwo(){
