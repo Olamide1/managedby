@@ -44,6 +44,9 @@
        <b-form-group>
         <b-form-input placeholder="Firstname" v-model="firstname"></b-form-input>
       </b-form-group>
+       <b-form-group>
+        <b-form-input placeholder="Lastname" v-model="lastname"></b-form-input>
+      </b-form-group>
       <p align="center">{{message}}</p>
       <b-button class="mt-3" variant="outline-dark" block @click="addColleagues">Add</b-button>
     </b-modal>
@@ -65,7 +68,7 @@
                 <td>{{request.category}}</td>
            <td>
                <span v-if="request.status == 'todo'" class="badge badge-danger">Todo</span>
-                <span v-else-if="request.status == 'doing'" class="badge badge-primary">Done</span>
+                <span v-else-if="request.status == 'doing'" class="badge badge-primary">Doing</span>
                 <span v-else class="badge badge-info"> Done</span>
            </td>
            <td align="center">
@@ -76,8 +79,8 @@
                  {{request.request}}
                </b-dropdown-header>
                <b-dropdown-item>
-                  <button class="btn btn-outline-dark" @click="load">Done</button>
-                  <button class="btn btn-outline-dark">Doing</button>
+                  <button class="btn btn-outline-dark" @click="markstatus(request._id, 'doing')">Doing</button>
+                  <button class="btn btn-outline-dark" @click="markstatus(request._id, 'done')">Done</button>
                </b-dropdown-item>
             </b-dropdown></td>
             </tr>
@@ -89,7 +92,7 @@
 
 <!-- User section -->
 
-    <div v-else class="container-fluid scroll">
+    <div v-else class="scroll">
         <b-button variant="outline-dark" align="center" @click="showModalTwo">Submit request</b-button><br><br>
         <b-modal ref="modal-two" hide-footer title="Place request">
       <b-form-group>
@@ -128,7 +131,8 @@
             <tr>
                 <td>
                <span v-if="my_request.status == 'todo'" class="badge badge-danger">Todo</span>
-                <span v-else class="badge badge-info">Done</span>
+                <span v-else-if="my_request.status == 'doing'" class="badge badge-info">Doing</span>
+                <span v-else class="badge bagde-primary">Done</span>
                 </td>
                 <td>{{my_request.area}}</td>
                 <td>{{my_request.category}}</td>
@@ -165,6 +169,7 @@ export default {
             role: sessionStorage.getItem('role'),
             company_email: '',
             firstname: '',
+            lastname: '',
             category: '',
             area:'',
             indie: [],
@@ -173,6 +178,7 @@ export default {
             total_request: '',
             message: '',
             requests: [],
+            id: '',
             my_requests: [],
             pin: sessionStorage.getItem('pin')
         }
@@ -182,8 +188,19 @@ export default {
             sessionStorage.clear();
             this.$router.push('/')
         },
-        load(){
-            console.log('hello')
+        markstatus(id, action){
+            var status = action
+            var id = id
+            axios.post('http://localhost:3000/api/updaterequest', {
+                id: id,
+                status: status
+            }).then( response => {
+                console.log(response)
+                this.$router.go('/dashboard')
+            }).catch( err => {
+                console.log(err)
+            })
+
         },
         loadCompanyRequest() {
             axios.post('http://localhost:3000/api/getcompanyrequest', {
@@ -236,6 +253,7 @@ export default {
         },
         addColleagues(){
             var firstname = this.firstname
+            var lastname = this.lastname
             var role = 'User'
             var company_name = this.company_name
             var company_email = this.company_email
@@ -248,6 +266,7 @@ export default {
             } else {
                 axios.post('http://localhost:3000/api/signup', {
                 firstname: firstname,
+                lastname: lastname,
                 role: role,
                 company_name: company_name,
                 company_email: company_email,

@@ -27,6 +27,17 @@ exports.findMyRequests = async(req, reply) => {
     }
 }
 
+exports.updateRequestStatus = async (req, reply) => {
+    try {
+        const id = req.body.id
+        const updatedrequest = req.body
+        const { ...updateData } = updatedrequest
+        const update = await Requests.findByIdAndUpdate(id, updateData, {new: true})
+        return update
+    }catch(err){
+        throw boom.boomify(err)
+    }
+}
 exports.findUndoneRequests = async (req, reply)=> {
     try {
 

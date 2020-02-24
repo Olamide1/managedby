@@ -29,6 +29,11 @@ const routes = [
     },
     {
         method: 'POST',
+        url: '/api/updaterequest',
+        handler: requestController.updateRequestStatus
+    },
+    {
+        method: 'POST',
         url: '/api/addemployee',
         handler: userController.addEmployees
     },
