@@ -19,6 +19,7 @@
     "fastify": "^2.12.0",
     "fastify-swagger": "^2.5.0",
     "mongoose": "^5.8.11",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "nodemailer": "^6.3.1"
   }
 }

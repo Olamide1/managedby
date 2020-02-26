@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     industry: String, 
     company_size: String,
     creator: String,
+    office: String,
     company_pin: String
 })
 

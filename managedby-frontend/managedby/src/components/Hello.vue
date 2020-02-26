@@ -51,6 +51,7 @@
         <b-form-input placeholder="Company Name" v-model="company_name"></b-form-input>
         <b-form-input placeholder="Company Industry eg: Fintech" v-model="industry"></b-form-input>
         <b-form-input placeholder="Company size using ranges (1-100)" v-model="company_size"></b-form-input>
+        <b-form-input placeholder="Office" v-model="office"></b-form-input>
     </b-form-group>
  <b-form-group>
     <b-form-input placeholder="Company Pin" v-model="company_pin" type="password"></b-form-input>
@@ -76,6 +77,7 @@ export default {
       company_email: '',
       industry: '',
       company_pin: '',
+      office: '',
       message: '',
       company_name: '',
       company_size:'',
@@ -119,6 +121,7 @@ export default {
       var company_size = this.company_size
       var password = this.company_pin
       var role = 'Admin'
+      var office = this.office
       var creator = this.company_email
 
       axios.post('http://localhost:3000/api/signup', {
@@ -129,6 +132,7 @@ export default {
         company_size: company_size,
         industry: industry,
         role: role,
+        office: office,
         creator: creator,
         company_pin: password
       }).then( resp => {
