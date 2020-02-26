@@ -1,15 +1,6 @@
 const boom = require('boom')
 const User = require('../models/Users')
-const nodemailer = require('nodemailer')
 
-let transport = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    auth: {
-       user: 'olamideakomolafe1234@gmail.com',
-       pass: 'Holyjesus2016'
-    }
-  });
 
 exports.login = async (req, reply) => {
     try {

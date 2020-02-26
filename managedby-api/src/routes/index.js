@@ -71,8 +71,12 @@ const routes = [
         method: 'POST',
         url: '/api/findundone',
         handler: requestController.findUndoneRequests
-    }
-
+    },
+   // {
+      //  method: 'POST',
+      //  url: '/api/sendsignupemail',
+      //  handler: userController.sendWelcomeEmail
+    //}
 ]
 
 module.exports = routes

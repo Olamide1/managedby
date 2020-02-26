@@ -17,6 +17,7 @@ routes.forEach((route, index) => {
     fastify.route(route)
    })
 fastify.get('/', async (request, reply) => {
+  reply.sent = true
   return { hello: 'world' }
 })
 
