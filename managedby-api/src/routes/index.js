@@ -68,6 +68,11 @@ const routes = [
         handler: requestController.findById
     },
     {
+      method: 'GET',
+      url: '/api/allrequests',
+      handler: requestController.allRequests
+    },
+    {
         method: 'POST',
         url: '/api/findundone',
         handler: requestController.findUndoneRequests

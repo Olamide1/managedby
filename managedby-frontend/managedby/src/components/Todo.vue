@@ -18,7 +18,7 @@
 
             </Slide> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               
-                 {{company_name}} is ManagedBy <b>{{firstname}}  | View Colleagues</b>
+                 {{company_name}} is ManagedBy <b>{{firstname}}  | Todos</b>
                
             </b-card-body>
         </b-card>

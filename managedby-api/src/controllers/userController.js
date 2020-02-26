@@ -3,11 +3,11 @@ const User = require('../models/Users')
 const nodemailer = require('nodemailer')
 
 let transporter = nodemailer.createTransport({
-    host: 'in-v3.mailjet.com',
-    port: 587,
+    host: 'smtp.gmail.com',
+    port: 465,
     auth: {
-        user: '63d42e9528ef8736196c3deed05a6309',
-        pass: '506d441ab8b912079e43bf8545d036b6'
+        user: 'theolaakomolafe@gmail.com',
+        pass: 'Holyjesus2016'
     }
 })
 
@@ -17,22 +17,39 @@ exports.sendSignUpEmail = async(req, reply) => {
         var firstname = req.body.firstname
         var email = req.body.company_email
         await transporter.sendMail({
-            from: '"Manny from ManagedBy" <manny@managedby.com>',
+            from: 'Mandy from ManagedBy <theolaakomolafe@gmail.com>',
             to: email,
             subject: 'Welcome to ManagedBy, ' + firstname,
-            text: "Welcome, " + firstname+ " Thank you for being a part of our journey.",
-            html: `<img src='' alt='Welcome'>`,
-        }, (err, info) => {
-            if (err) {
-                return process.exit(1)
-            }
-            return 'Message sent'
+            html: "<center> <img src='cid:unique@cid'/> </center> <br> <p> Welcome " +'<b>' + firstname+ '</b>' 
+            + ", Thank you for being a part of our journey & joining our Beta. <br>"
+            + " <b>Managedby</b> allows Office managers, space managers, & house managers, add people," 
+            + " recieve internal helpdesk requests, "
+            + " manage tasks, while keeping everyone in the loop on progress.</p><br>" 
+            + "<h3> Say goodbye to taps on the shoulder and awkward office visits.</h3>"
+            + "<p>Of course, this beta is free for a month as we are mostly getting feedback to suit all" 
+            + " all the companies we'd be working with. Please feel free to reach out at any time.</p><br> Cheers.",
+            attachments: [{
+                filename: 'Header.png',
+                path: 'C:/Users/admin/Documents/managedby/managedby-api/src/assets/Header.png',
+                cid: 'unique@cid'
+            }]
         })
+        return 'email sent'
     } catch( err){
         throw boom.boomify(err)
     }
 }
 
+
+exports.sendEmpInvite = async (req, reply) => {
+    try {
+        var firstname = req.body.firstname
+        var pin = req.body.pin
+        var creator = req.body.created_by
+    } catch(err){
+        throw boom.boomify(err)
+    }
+}
 
 exports.login = async (req, reply) => {
     try {

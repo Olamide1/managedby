@@ -28,7 +28,8 @@
 <!-- Admin section -->
     <div v-if="role == 'Admin'">
         <b-button variant="outline-dark" align="center" @click="showModal">Add Colleagues</b-button> <br><br>
-        <div class="card" style="width: 60%;">
+       <div class="row">
+            <div class="card" style="width: 50%;">
             <div class="card-body">
                 <h5 class="card-title">Total requests for {{company_name}}</h5>
                     <p class="card-text">
@@ -36,6 +37,15 @@
                     </p>
                 </div>
         </div>
+        <div class="card" style="width: 50%;">
+            <div class="card-body">
+                <h5 class="card-title">Total users for {{company_name}}</h5>
+                    <p class="card-text">
+                        total users added is {{people}}
+                    </p>
+                </div>
+        </div>
+       </div>
 
     <b-modal ref="my-modal" hide-footer title="Add colleagues">
       <b-form-group>
@@ -177,6 +187,8 @@ export default {
             request: '',
             total_request: '',
             message: '',
+            persons: [],
+            people: '',
             requests: [],
             id: '',
             my_requests: [],
@@ -187,6 +199,18 @@ export default {
         logout () {
             sessionStorage.clear();
             this.$router.push('/')
+        },
+        getCreatedBy () {
+            console.log(this.creator)
+            axios.post('http://localhost:3000/api/coll', {
+                creator: this.creator
+            }).then( res => {
+                console.log(res.data)
+                this.persons = res.data
+                this.people = this.persons.length
+            }).catch(err => {
+                console.log(err)
+            })
         },
         markstatus(id, action){
             var status = action
@@ -260,7 +284,6 @@ export default {
             var creator = this.creator
             var company_pin = this.pin
             console.log(creator)
-
             if(firstname == '' || company_email == '') {
                 this.message = 'Fill in data please'
             } else {
@@ -308,6 +331,7 @@ export default {
     mounted(){
         this.loadCompanyRequest()
         this.findMyRequest()
+        this.getCreatedBy()
     }
 }
 </script>

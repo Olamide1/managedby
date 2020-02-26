@@ -56,7 +56,7 @@
  <b-form-group>
     <b-form-input placeholder="Company Pin ( 4 digit pin that would provide access to your colleagues)" v-model="company_pin" type="password"></b-form-input>
   </b-form-group>
-      <b-button block variant="outline-dark" size="sm" @click="signup">Signup</b-button>
+      <b-button block variant="outline-dark" size="sm" @click="signup">{{signupbutton}}</b-button>
     <h5 align="center" bgcolor="red">{{message}}</h5>
 
  <p align="center">Already have an account? <a @click="loginbutton = true">Login</a></p>
@@ -78,6 +78,7 @@ export default {
       industry: '',
       company_pin: '',
       office: '',
+      signupbutton: 'Signup',
       message: '',
       company_name: '',
       company_size:'',
@@ -121,6 +122,7 @@ export default {
       var company_size = this.company_size
       var password = this.company_pin
       var role = 'Admin'
+      this.signupbutton = 'Loading...'
       var office = this.office
       var creator = this.company_email
 
@@ -138,7 +140,15 @@ export default {
       }).then( resp => {
         if (resp.data.message == "User's email exist") {
           this.message = "User already exist"
+          this.signupbutton = "Signup"
         } else {
+          sessionStorage.setItem('firstname', firstname)
+          sessionStorage.setItem('company_email', this.company_email)
+          sessionStorage.setItem('company_name', this.company_name)
+          sessionStorage.setItem('role', 'Admin')
+          sessionStorage.setItem('pin', this.company_pin)
+          sessionStorage.setItem('created_by', this.company_email)
+          this.$router.push('/dashboard')
           axios.post('http://localhost:3000/api/sendsignupemail', {
             company_email : this.company_email,
             firstname: firstname
@@ -147,13 +157,6 @@ export default {
           }).catch(error => {
             console.log(error)
           })
-          sessionStorage.setItem('firstname', firstname)
-          sessionStorage.setItem('company_email', this.company_email)
-          sessionStorage.setItem('company_name', this.company_name)
-          sessionStorage.setItem('role', 'Admin')
-          sessionStorage.setItem('pin', this.company_pin)
-          sessionStorage.setItem('created_by', this.creator)
-        //  this.$router.push('/dashboard')
         }
       }).catch(err => {
         console.log(err)

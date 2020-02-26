@@ -55,6 +55,14 @@ exports.findUndoneRequests = async (req, reply)=> {
     }
 }
 
+exports.allRequests = async (req, reply) => {
+    try {
+        const request = Requests.find()
+        return request
+    } catch(err) {
+        throw boom.boomify(err)
+    }
+}
 exports.findById = async (req, reply) => {
     try {
         var id = req.body.id
