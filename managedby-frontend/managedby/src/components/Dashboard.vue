@@ -114,7 +114,7 @@
                         total request placed is {{my_total_request}}
                     </p>
                 </div>
-        </div>
+    </div>
 
     <table class="table scroll">
         <p align="center" v-if="my_requests.length == 0">You have not placed any request yet</p>

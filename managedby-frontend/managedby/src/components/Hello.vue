@@ -34,10 +34,10 @@
     <div v-else>
       <b-card title="Office manager signup">
       <b-card-text>
-      Office Manager? Use ManagedBy to receive,manage and record requests within the office. Get started by: <br>
+   <p>Office/House Manager? Use ManagedBy to receive,manage & record help requests within your office or apartment building. Get started by: <br>
       1. Creating an account, <br>
       2. Adding colleagues and <br>
-      3. Collect & Organize their requests on your dashboard.
+      3. Collect & Organize their requests on your dashboard.</p>
     </b-card-text>
     </b-card> <br>
 
@@ -50,11 +50,11 @@
         <b-form-input placeholder="Company Email" v-model="company_email" type="email"></b-form-input>
         <b-form-input placeholder="Company Name" v-model="company_name"></b-form-input>
         <b-form-input placeholder="Company Industry eg: Fintech" v-model="industry"></b-form-input>
-        <b-form-input placeholder="Company size using ranges (1-100)" v-model="company_size"></b-form-input>
-        <b-form-input placeholder="Office" v-model="office"></b-form-input>
+        <b-form-input placeholder="Company size using a range (1-100)" v-model="company_size"></b-form-input>
+        <b-form-input placeholder="Office location" v-model="office"></b-form-input>
     </b-form-group>
  <b-form-group>
-    <b-form-input placeholder="Company Pin" v-model="company_pin" type="password"></b-form-input>
+    <b-form-input placeholder="Company Pin ( 4 digit pin that would provide access to your colleagues)" v-model="company_pin" type="password"></b-form-input>
   </b-form-group>
       <b-button block variant="outline-dark" size="sm" @click="signup">Signup</b-button>
     <h5 align="center" bgcolor="red">{{message}}</h5>
@@ -136,17 +136,24 @@ export default {
         creator: creator,
         company_pin: password
       }).then( resp => {
-        console.log(resp.data)
         if (resp.data.message == "User's email exist") {
           this.message = "User already exist"
         } else {
+          axios.post('http://localhost:3000/api/sendsignupemail', {
+            company_email : this.company_email,
+            firstname: firstname
+          }).then( respo => {
+            console.log(respo)
+          }).catch(error => {
+            console.log(error)
+          })
           sessionStorage.setItem('firstname', firstname)
           sessionStorage.setItem('company_email', this.company_email)
           sessionStorage.setItem('company_name', this.company_name)
           sessionStorage.setItem('role', 'Admin')
           sessionStorage.setItem('pin', this.company_pin)
           sessionStorage.setItem('created_by', this.creator)
-          this.$router.push('/dashboard')
+        //  this.$router.push('/dashboard')
         }
       }).catch(err => {
         console.log(err)

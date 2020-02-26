@@ -1,6 +1,6 @@
 const boom = require('boom')
 const User = require('../models/Users')
-
+const nodemailer = require('nodemailer')
 
 exports.login = async (req, reply) => {
     try {
