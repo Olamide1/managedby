@@ -2,6 +2,38 @@ const boom = require('boom')
 const User = require('../models/Users')
 const nodemailer = require('nodemailer')
 
+let transporter = nodemailer.createTransport({
+    host: 'in-v3.mailjet.com',
+    port: 587,
+    auth: {
+        user: '63d42e9528ef8736196c3deed05a6309',
+        pass: '506d441ab8b912079e43bf8545d036b6'
+    }
+})
+
+
+exports.sendSignUpEmail = async(req, reply) => {
+    try {
+        var firstname = req.body.firstname
+        var email = req.body.company_email
+        await transporter.sendMail({
+            from: '"Manny from ManagedBy" <manny@managedby.com>',
+            to: email,
+            subject: 'Welcome to ManagedBy, ' + firstname,
+            text: "Welcome, " + firstname+ " Thank you for being a part of our journey.",
+            html: `<img src='' alt='Welcome'>`,
+        }, (err, info) => {
+            if (err) {
+                return process.exit(1)
+            }
+            return 'Message sent'
+        })
+    } catch( err){
+        throw boom.boomify(err)
+    }
+}
+
+
 exports.login = async (req, reply) => {
     try {
         var company_email = req.body.company_email

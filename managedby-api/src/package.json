@@ -19,6 +19,7 @@
     "fastify": "^2.12.0",
     "fastify-swagger": "^2.5.0",
     "mongoose": "^5.8.11",
-    "nodemailer": "^6.4.3"
+    "nodemailer": "^6.4.3",
+    "smtp-email-sender": "^1.0.0"
   }
 }
