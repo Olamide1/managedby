@@ -55,6 +55,21 @@ exports.findUndoneRequests = async (req, reply)=> {
     }
 }
 
+exports.findMyDoneRequests = async(req, reply) => {
+    try {
+        var company_email = req.body.company_email
+        var status = req.body.status
+        const myrequest = Requests.find({
+            $and: [
+                {'request_by': company_email, 'status': status}
+            ]
+        })
+        return myrequest
+    }catch(err){
+        throw boom.boomify(err)
+    }
+}
+
 exports.allRequests = async (req, reply) => {
     try {
         const request = Requests.find()

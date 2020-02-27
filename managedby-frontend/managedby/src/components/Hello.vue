@@ -51,7 +51,7 @@
         <b-form-input placeholder="Company Name" v-model="company_name"></b-form-input>
         <b-form-input placeholder="Company Industry eg: Fintech" v-model="industry"></b-form-input>
         <b-form-input placeholder="Company size using a range (1-100)" v-model="company_size"></b-form-input>
-        <b-form-input placeholder="Office location" v-model="office"></b-form-input>
+        <b-form-input placeholder="Office (Nairobi, Accra, HeadOffice)" v-model="office"></b-form-input>
     </b-form-group>
  <b-form-group>
     <b-form-input placeholder="Company Pin ( 4 digit pin that would provide access to your colleagues)" v-model="company_pin" type="password"></b-form-input>

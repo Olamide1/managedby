@@ -79,8 +79,18 @@ const routes = [
     },
     {
         method: 'POST',
+        url: '/api/findmydone',
+        handler: requestController.findMyDoneRequests
+    },
+    {
+        method: 'POST',
         url: '/api/sendsignupemail',
         handler: userController.sendSignUpEmail
+    },
+    {
+        method: 'POST',
+        url: '/api/sendinviteemail',
+        handler: userController.sendEmpInvite
     }
 ]
 

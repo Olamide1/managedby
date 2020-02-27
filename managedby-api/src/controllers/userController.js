@@ -22,12 +22,12 @@ exports.sendSignUpEmail = async(req, reply) => {
             subject: 'Welcome to ManagedBy, ' + firstname,
             html: "<center> <img src='cid:unique@cid'/> </center> <br> <p> Welcome " +'<b>' + firstname+ '</b>' 
             + ", Thank you for being a part of our journey & joining our Beta. <br>"
-            + " <b>Managedby</b> allows Office managers, space managers, & house managers, add people," 
+            + " <b>Managedby</b> allows Office, space, & house managers, add people," 
             + " recieve internal helpdesk requests, "
             + " manage tasks, while keeping everyone in the loop on progress.</p><br>" 
             + "<h3> Say goodbye to taps on the shoulder and awkward office visits.</h3>"
-            + "<p>Of course, this beta is free for a month as we are mostly getting feedback to suit all" 
-            + " all the companies we'd be working with. Please feel free to reach out at any time.</p><br> Cheers.",
+            + "<p>Of course, this beta is free for a month as we are mostly getting feedback to improve" 
+            + " the product for the companies we'll be working with. Please feel free to reach out at any time.</p><br> Cheers.",
             attachments: [{
                 filename: 'Header.png',
                 path: 'C:/Users/admin/Documents/managedby/managedby-api/src/assets/Header.png',
@@ -46,6 +46,28 @@ exports.sendEmpInvite = async (req, reply) => {
         var firstname = req.body.firstname
         var pin = req.body.pin
         var creator = req.body.created_by
+        var email = req.body.company_email
+        var company_name = req.body.company_name
+
+        await transporter.sendMail({
+            from: 'Mandy from ManagedBy <theolaakomolafe@gmail.com>',
+            to: email,
+            subject: 'Hi, ' + firstname + ' you have been invited to ' + company_name + "'s ManagedBy",
+            html: "<center> <img src='cid:unique@cid'/> </center> <br> <p> Hello " +'<b>' + firstname+ '</b>, ' 
+            + creator + " has invited you to join " + company_name + "'s ManagedBy account. <br>"
+            + " <b>Managedby</b> allows Office, space, & house managers, add people," 
+            + " recieve internal helpdesk requests, "
+            + " manage tasks, while keeping everyone in the loop on progress.</p><br>" 
+            + "<h3> All you have to do is login with this(your email) email and this pin: " + pin + '</h3>'
+            + "<p>Of course, this beta is free for a month as we are mostly getting feedback to help" 
+            + " get the product better for you. Please feel free to reach out at any time.</p><br> Cheers.",
+            attachments: [{
+                filename: 'Header.png',
+                path: 'C:/Users/admin/Documents/managedby/managedby-api/src/assets/Header.png',
+                cid: 'unique@cid'
+            }]
+        })
+        return 'email sent'
     } catch(err){
         throw boom.boomify(err)
     }

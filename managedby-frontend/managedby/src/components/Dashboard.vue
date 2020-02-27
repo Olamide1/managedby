@@ -14,6 +14,9 @@
             <router-link to="/todo" v-show="role == 'Admin'">
                 <span>Todo</span>
             </router-link>
+             <router-link to="/todo" v-show="role == 'User'">
+                <span>Done requests</span>
+            </router-link>
             
             <a @click="logout"><span>Logout</span></a>
 
@@ -26,7 +29,8 @@
         </div>
 <br>
 <!-- Admin section -->
-    <div v-if="role == 'Admin'">
+  
+         <div v-if="role == 'Admin'">
         <b-button variant="outline-dark" align="center" @click="showModal">Add Colleagues</b-button> <br><br>
        <div class="row">
             <div class="card" style="width: 50%;">
@@ -45,7 +49,7 @@
                     </p>
                 </div>
         </div>
-       </div>
+       </div> 
 
     <b-modal ref="my-modal" hide-footer title="Add colleagues">
       <b-form-group>
@@ -57,13 +61,18 @@
        <b-form-group>
         <b-form-input placeholder="Lastname" v-model="lastname"></b-form-input>
       </b-form-group>
+      <b-form-group>
+        <b-form-input placeholder="Office (eg. Nairobi)" v-model="office"></b-form-input>
+      </b-form-group>
       <p align="center">{{message}}</p>
       <b-button class="mt-3" variant="outline-dark" block @click="addColleagues">Add</b-button>
     </b-modal>
 <br>
-    <table class="table scroll">
+    <center>
         <p align="center" v-if="requests.length == 0">No requests available</p>
+    
         <div v-show="this.requests.length >= 1">
+                <table class="table scroll">
             <thead>
                 <tr>
                  <th scope="col">Area</th>
@@ -79,7 +88,7 @@
            <td>
                <span v-if="request.status == 'todo'" class="badge badge-danger">Todo</span>
                 <span v-else-if="request.status == 'doing'" class="badge badge-primary">Doing</span>
-                <span v-else class="badge badge-info"> Done</span>
+                <span v-else class="badge badge-success"> Done</span>
            </td>
            <td align="center">
                <b-dropdown id="dropdown" dropright variant="outline-dark">
@@ -95,8 +104,9 @@
             </b-dropdown></td>
             </tr>
             </tbody>
-         </div>
     </table>
+    </div>
+    </center>
     </div>
 <!-- End of Admin Section -->
 
@@ -104,7 +114,7 @@
 
     <div v-else class="scroll">
         <b-button variant="outline-dark" align="center" @click="showModalTwo">Submit request</b-button><br><br>
-        <b-modal ref="modal-two" hide-footer title="Place request">
+    <b-modal ref="modal-two" hide-footer title="Place request">
       <b-form-group>
         <b-form-input placeholder="Category (repairs, replacement)" v-model="category"></b-form-input>
       </b-form-group>
@@ -124,11 +134,12 @@
                         total request placed is {{my_total_request}}
                     </p>
                 </div>
-    </div>
-
-    <table class="table scroll">
-        <p align="center" v-if="my_requests.length == 0">You have not placed any request yet</p>
-        <div v-show="this.my_requests.length >= 1">
+    </div> <br>
+         
+     <center>
+            <p  v-if="my_requests.length == 0">You have not placed any request yet</p>
+        <div v-else>
+            <table class="table scroll">
               <thead>
                 <tr>
                  <th scope="col">Status</th>
@@ -142,7 +153,7 @@
                 <td>
                <span v-if="my_request.status == 'todo'" class="badge badge-danger">Todo</span>
                 <span v-else-if="my_request.status == 'doing'" class="badge badge-info">Doing</span>
-                <span v-else class="badge bagde-primary">Done</span>
+                <span v-else class="badge badge-success">Done</span>
                 </td>
                 <td>{{my_request.area}}</td>
                 <td>{{my_request.category}}</td>
@@ -155,10 +166,12 @@
                 </td>  
             </tr>
             </tbody>
-            
-         </div>
-    </table>
-    </div>
+            </table>
+     </div>
+     </center>
+    
+    </div>    
+
 <!-- End of user section -->
     </div>
 </template>
@@ -188,6 +201,7 @@ export default {
             total_request: '',
             message: '',
             persons: [],
+            office: '',
             people: '',
             requests: [],
             id: '',
@@ -257,7 +271,7 @@ export default {
                 }).then(response => {
                     console.log(response.data)
                     this.my_requests.push({'status': status, 'category': category, 'area': area, 'request': request})
-                    this.hideModal()
+                    this.hideModalTwo()
                 }).catch(err => {
                     console.log(err)
                 })
@@ -283,6 +297,7 @@ export default {
             var company_email = this.company_email
             var creator = this.creator
             var company_pin = this.pin
+            var office = this.office
             console.log(creator)
             if(firstname == '' || company_email == '') {
                 this.message = 'Fill in data please'
@@ -294,13 +309,25 @@ export default {
                 company_name: company_name,
                 company_email: company_email,
                 creator: creator,
-                company_pin: company_pin
+                company_pin: company_pin,
+                office: office
             }).then(res => {
                 console.log(res.data)
                 if (res.data.message == "User's email exist"){
-                    this.message = 'User had been added before.'
+                    this.message = 'User has already been added.'
                 } else {
                     this.hideModal();
+                    axios.post('http://localhost:3000/api/sendinviteemail', {
+                        firstname: firstname,
+                        pin: company_pin,
+                        created_by: creator,
+                        company_email: company_email,
+                        company_name: company_name
+                    }).then(res=> {
+                        console.log(res.data)
+                    }).catch( err => {
+                        console.log(err)
+                    })
                 }
             }).catch(err => {
                 console.log(err);
@@ -315,6 +342,9 @@ export default {
       },
       hideModal() {
         this.$refs['my-modal'].hide()
+      },
+      hideModalTwo() {
+          this.$refs['modal-two'].hide()
       },
       findMyRequest(){
           axios.post('http://localhost:3000/api/myrequests', {
