@@ -20,7 +20,7 @@ exports.sendSignUpEmail = async(req, reply) => {
             from: 'Mandy from ManagedBy <theolaakomolafe@gmail.com>',
             to: email,
             subject: 'Welcome to ManagedBy, ' + firstname,
-            html: "<center> <img src='cid:unique@cid'/> </center> <br> <p> Welcome " +'<b>' + firstname+ '</b>' 
+            html: "<center> <img src='cid:unique@cid' width='250' height='200px'/> </center> <br> <p> Welcome " +'<b>' + firstname+ '</b>' 
             + ", Thank you for being a part of our journey & joining our Beta. <br>"
             + " <b>Managedby</b> allows Office, space, & house managers, add people," 
             + " recieve internal helpdesk requests, "
@@ -29,8 +29,8 @@ exports.sendSignUpEmail = async(req, reply) => {
             + "<p>Of course, this beta is free for a month as we are mostly getting feedback to improve" 
             + " the product for the companies we'll be working with. Please feel free to reach out at any time.</p><br> Cheers.",
             attachments: [{
-                filename: 'Header.png',
-                path: 'C:/Users/admin/Documents/managedby/managedby-api/src/assets/Header.png',
+                filename: 'Header_ksb5kg.png',
+                path: 'https://res.cloudinary.com/theakomolafe/image/upload/v1582911255/Header_ksb5kg.png',
                 cid: 'unique@cid'
             }]
         })
@@ -62,8 +62,8 @@ exports.sendEmpInvite = async (req, reply) => {
             + "<p>Of course, this beta is free for a month as we are mostly getting feedback to help" 
             + " get the product better for you. Please feel free to reach out at any time.</p><br> Cheers.",
             attachments: [{
-                filename: 'Header.png',
-                path: 'C:/Users/admin/Documents/managedby/managedby-api/src/assets/Header.png',
+                filename: 'Header_ksb5kg.png',
+                path: 'https://res.cloudinary.com/theakomolafe/image/upload/v1582911255/Header_ksb5kg.png',
                 cid: 'unique@cid'
             }]
         })
