@@ -31,10 +31,32 @@
 <!-- Admin Section -->
     <div v-show="role == 'Admin'">
        <center>
-           <div>
-                <h2>Admin</h2>
-           </div>
            
+        <center>
+        <h4>Your todos </h4>
+        <div v-if="todos.length == 0">
+            <p>Yayy! <b>{{firstname}},</b> You have no todos.</p>
+        </div>
+
+        <div v-else>
+            <table class="table scroll">
+            <thead>
+                <tr>
+                 <th scope="col">Status</th>
+                 <th scope="col">Area</th>
+                 <th scope="col">Category</th>
+                </tr>
+            </thead>
+            <tbody v-for="(todo, index) in todos" :key="index">
+                <tr v-show="todo.status == 'todo'">
+                    <td><span class="badge badge-danger">todo</span></td>
+                    <td>{{todo.area}}</td>
+                    <td>{{todo.category}}</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        </center>  
       </center>
     </div>
 
@@ -87,7 +109,7 @@ export default {
             firstname: sessionStorage.getItem('firstname'),
             company_email: sessionStorage.getItem('company_email'),
             dones: [],
-            requests: [],
+            todos: [],
             total_request: ''
         }
     },
@@ -108,6 +130,17 @@ export default {
               console.log(err)
           })
       },
+      findUndone() {
+          axios.post('http://localhost:3000/api/findundone',{
+              company_name: this.company_name,
+              status: 'todo'
+          }).then( resp => {
+              console.log(resp.data)
+              this.todos = resp.data
+          }).catch(err => {
+              console.log(err)
+          })
+      },
       loadCompanyRequest() {
             axios.post('http://localhost:3000/api/getcompanyrequest', {
                     company_name: this.company_name
@@ -123,6 +156,7 @@ export default {
     mounted(){
         this.findMyRequest()
         this.loadCompanyRequest()
+        this.findUndone()
     }
 }
 </script>

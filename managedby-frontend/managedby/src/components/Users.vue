@@ -25,35 +25,39 @@
         </div>
 <br>
 
-<table class="table">
-        <p align="center" v-if="persons.length == 0">No colleagues added</p>
-        <div v-show="this.persons.length >= 1">
-            <div>
-                <thead>
+<center>
+    <center>
+        <p v-if="persons.length == 0">No colleagues added</p>
+        <div v-else>
+         <table class="table scroll">
+        
+            <thead>
                 <tr>
                  <th scope="col">Name</th>
                  <th scope="col">Email</th>
-                 <th>Action</th>
+                 <th scope="col">Action</th>
                 </tr>
             </thead>
-            <tbody v-for="(person, index) in persons" :key="index" align="center">
+            <tbody v-for="(person, index) in persons" :key="index">
                 <tr>
                 <td>{{person.firstname}}</td>
                 <td>{{person.company_email}}</td>
-                <td v-if="person.role == 'User'" align="center">
+                <td v-if="person.role == 'User'">
                     <b-dropdown id="dropdown-1" dropright variant="dark-outline">
                         <b-dropdown-header><h5>ROLE: {{person.role}}</h5></b-dropdown-header>
                         <b-dropdown-item class="list-group">
                              <button class="btn btn-outline-danger" @click="deleteUser(person._id, index)">Delete</button>
                         </b-dropdown-item>
                     </b-dropdown>
-                    </td>
+                </td>
                 </tr>
             </tbody>
-            </div>
-         </div>
     </table>
     </div>
+    </center>
+
+</center>
+</div>
 </template>
 <script>
 import axios from 'axios'

@@ -53,7 +53,7 @@ exports.sendEmpInvite = async (req, reply) => {
             from: 'Mandy from ManagedBy <theolaakomolafe@gmail.com>',
             to: email,
             subject: 'Hi, ' + firstname + ' you have been invited to ' + company_name + "'s ManagedBy",
-            html: "<center> <img src='cid:unique@cid'/> </center> <br> <p> Hello " +'<b>' + firstname+ '</b>, ' 
+            html: "<center> <img src='cid:unique@cid' width='250' height='200px'/> </center> <br> <p> Hello " +'<b>' + firstname+ '</b>, ' 
             + creator + " has invited you to join " + company_name + "'s ManagedBy account. <br>"
             + " <b>Managedby</b> allows Office, space, & house managers, add people," 
             + " recieve internal helpdesk requests, "

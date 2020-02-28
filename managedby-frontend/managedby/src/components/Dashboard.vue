@@ -31,7 +31,7 @@
 <!-- Admin section -->
   
          <div v-if="role == 'Admin'">
-        <b-button variant="outline-dark" align="center" @click="showModal">Add Colleagues</b-button> <br><br>
+        <b-button variant="outline-dark" align="center" @click="showModal">Add people</b-button> <br><br>
        <div class="row">
             <div class="card" style="width: 50%;">
             <div class="card-body">
@@ -51,7 +51,7 @@
         </div>
        </div> 
 
-    <b-modal ref="my-modal" hide-footer title="Add colleagues">
+    <b-modal ref="my-modal" hide-footer title="Add people">
       <b-form-group>
         <b-form-input placeholder="Company Email" v-model="company_email" type="email"></b-form-input>
       </b-form-group>
@@ -119,10 +119,10 @@
         <b-form-input placeholder="Category (repairs, replacement)" v-model="category"></b-form-input>
       </b-form-group>
        <b-form-group>
-        <b-form-input placeholder="Area (could be dept, apartment number etc" v-model="area"></b-form-input>
+        <b-form-input placeholder="Location (could be dept, apartment number etc" v-model="area"></b-form-input>
       </b-form-group>
       <b-form-group>
-        <b-form-textarea placeholder="Request" v-model="request"></b-form-textarea>
+        <b-form-textarea placeholder="Detailed description" v-model="request"></b-form-textarea>
       </b-form-group>
       <p align="center">{{message}}</p>
       <b-button class="mt-3" variant="outline-dark" block @click="createRequest">Submit</b-button>
@@ -271,6 +271,7 @@ export default {
                 }).then(response => {
                     console.log(response.data)
                     this.my_requests.push({'status': status, 'category': category, 'area': area, 'request': request})
+                    this.my_total_request++
                     this.hideModalTwo()
                 }).catch(err => {
                     console.log(err)
@@ -317,6 +318,7 @@ export default {
                     this.message = 'User has already been added.'
                 } else {
                     this.hideModal();
+                    this.people++
                     axios.post('http://localhost:3000/api/sendinviteemail', {
                         firstname: firstname,
                         pin: company_pin,
