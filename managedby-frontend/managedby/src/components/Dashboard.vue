@@ -216,8 +216,7 @@ export default {
         },
         getCreatedBy () {
             console.log(this.creator)
-            headers.set('Content-Type', 'application/json')
-            axios.post('managedby.herokuapp.com:80/api/coll', {
+            axios.post('managedby.herokuapp.com:80/api/coll',{ crossdomain: true }, {
                 creator: this.creator
             }).then( res => {
                 console.log(res.data)
@@ -230,8 +229,7 @@ export default {
         markstatus(id, action){
             var status = action
             var id = id
-            headers.set('Content-Type', 'application/json')
-            axios.post('managedby.herokuapp.com:80/api/updaterequest', {
+            axios.post('managedby.herokuapp.com:80/api/updaterequest',{ crossdomain: true }, {
                 id: id,
                 status: status
             }).then( response => {
@@ -243,8 +241,7 @@ export default {
 
         },
         loadCompanyRequest() {
-            headers.set('Content-Type', 'application/json')
-            axios.post('managedby.herokuapp.com:80/api/getcompanyrequest', {
+            axios.post('managedby.herokuapp.com:80/api/getcompanyrequest',{ crossdomain: true }, {
                     company_name: this.company_name
             }).then( resp => {
                 this.total_request = resp.data.length
@@ -264,8 +261,7 @@ export default {
             if (request == ''|| category == '' || area == '') {
                 this.message = 'Plese fill the forms'
             } else {
-                headers.set('Content-Type', 'application/json')
-                axios.post('managedby.herokuapp.com:80/api/createrequest', {
+                axios.post('managedby.herokuapp.com:80/api/createrequest', { crossdomain: true }, {
                     request: request,
                     category: category,
                     area: area,
@@ -285,8 +281,7 @@ export default {
         deleteRequest(id, index){
             var identify = id
             var i = index
-            headers.set('Content-Type', 'application/json')
-            axios.post('managedby.herokuapp.com:80/api/deleterequest', {
+            axios.post('managedby.herokuapp.com:80/api/deleterequest',{ crossdomain: true }, {
                 id: identify
             }).then( resp => {
                 this.my_requests.splice(i, 1);
@@ -308,8 +303,7 @@ export default {
             if(firstname == '' || company_email == '') {
                 this.message = 'Fill in data please'
             } else {
-                headers.set('Content-Type', 'application/json')
-                axios.post('managedby.herokuapp.com:80/api/signup', {
+                axios.post('managedby.herokuapp.com:80/api/signup', { crossdomain: true }, {
                 firstname: firstname,
                 lastname: lastname,
                 role: role,
@@ -325,8 +319,7 @@ export default {
                 } else {
                     this.hideModal();
                     this.people++
-                    headers.set('Content-Type', 'application/json')
-                    axios.post('managedby.herokuapp.com:80/api/sendinviteemail', {
+                    axios.post('managedby.herokuapp.com:80/api/sendinviteemail',{ crossdomain: true }, {
                         firstname: firstname,
                         pin: company_pin,
                         created_by: creator,
@@ -356,8 +349,7 @@ export default {
           this.$refs['modal-two'].hide()
       },
       findMyRequest(){
-          headers.set('Content-Type', 'application/json')
-          axios.post('managedby.herokuapp.com:80/api/myrequests', {
+          axios.post('managedby.herokuapp.com:80/api/myrequests',{ crossdomain: true }, {
                   request_by: this.my_email
           }).then( response => {
               console.log(response.data)

@@ -119,7 +119,7 @@ export default {
             this.$router.push('/')
         },
         findMyRequest(){
-          axios.post('managedby.herokuapp.com:80/api/myrequests', {
+          axios.post('managedby.herokuapp.com:80/api/myrequests',{ crossdomain: true }, {
                   request_by: this.company_email
           }).then( response => {
               console.log(response.data)
@@ -131,7 +131,7 @@ export default {
           })
       },
       findUndone() {
-          axios.post('managedby.herokuapp.com:80/api/findundone',{
+          axios.post('managedby.herokuapp.com:80/api/findundone',{ crossdomain: true },{
               company_name: this.company_name,
               status: 'todo'
           }).then( resp => {
@@ -142,7 +142,7 @@ export default {
           })
       },
       loadCompanyRequest() {
-            axios.post('managedby.herokuapp.com:80/api/getcompanyrequest', {
+            axios.post('managedby.herokuapp.com:80/api/getcompanyrequest',{ crossdomain: true }, {
                     company_name: this.company_name
             }).then( resp => {
                 this.total_request = resp.data.length

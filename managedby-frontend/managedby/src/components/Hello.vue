@@ -94,8 +94,7 @@ export default {
         this.message = 'Please fill in your data'
       } else {
         this.loginbtn = 'Loading...'
-        headers.set('Content-Type', 'application/json')
-        axios.post('managedby.herokuapp.com:80/api/login', {
+        axios.post('managedby.herokuapp.com:80/api/login',{ crossdomain: true }, {
         company_email: company_email,
         company_pin: password
       }).then( res => {
@@ -128,8 +127,7 @@ export default {
       this.signupbutton = 'Loading...'
       var office = this.office
       var creator = this.company_email
-      headers.set('Content-Type', 'application/json')
-      axios.post('managedby.herokuapp.com:80/api/signup', {
+      axios.post('managedby.herokuapp.com:80/api/signup',{ crossdomain: true }, {
         firstname: firstname,
         lastname: lastname,
         company_name: company_name,
@@ -152,8 +150,7 @@ export default {
           sessionStorage.setItem('pin', this.company_pin)
           sessionStorage.setItem('created_by', this.company_email)
           this.$router.push('/dashboard')
-          headers.set('Content-Type', 'application/json')
-          axios.post('managedby.herokuapp.com:80/api/sendsignupemail', {
+          axios.post('managedby.herokuapp.com:80/api/sendsignupemail',{ crossdomain: true }, {
             company_email : this.company_email,
             firstname: firstname
           }).then( respo => {
