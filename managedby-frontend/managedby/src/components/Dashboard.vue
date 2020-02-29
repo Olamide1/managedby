@@ -216,6 +216,7 @@ export default {
         },
         getCreatedBy () {
             console.log(this.creator)
+            headers.set('Content-Type', 'application/json')
             axios.post('managedby.herokuapp.com:80/api/coll', {
                 creator: this.creator
             }).then( res => {
@@ -229,6 +230,7 @@ export default {
         markstatus(id, action){
             var status = action
             var id = id
+            headers.set('Content-Type', 'application/json')
             axios.post('managedby.herokuapp.com:80/api/updaterequest', {
                 id: id,
                 status: status
@@ -241,6 +243,7 @@ export default {
 
         },
         loadCompanyRequest() {
+            headers.set('Content-Type', 'application/json')
             axios.post('managedby.herokuapp.com:80/api/getcompanyrequest', {
                     company_name: this.company_name
             }).then( resp => {
@@ -261,6 +264,7 @@ export default {
             if (request == ''|| category == '' || area == '') {
                 this.message = 'Plese fill the forms'
             } else {
+                headers.set('Content-Type', 'application/json')
                 axios.post('managedby.herokuapp.com:80/api/createrequest', {
                     request: request,
                     category: category,
@@ -281,6 +285,7 @@ export default {
         deleteRequest(id, index){
             var identify = id
             var i = index
+            headers.set('Content-Type', 'application/json')
             axios.post('managedby.herokuapp.com:80/api/deleterequest', {
                 id: identify
             }).then( resp => {
@@ -303,6 +308,7 @@ export default {
             if(firstname == '' || company_email == '') {
                 this.message = 'Fill in data please'
             } else {
+                headers.set('Content-Type', 'application/json')
                 axios.post('managedby.herokuapp.com:80/api/signup', {
                 firstname: firstname,
                 lastname: lastname,
@@ -319,6 +325,7 @@ export default {
                 } else {
                     this.hideModal();
                     this.people++
+                    headers.set('Content-Type', 'application/json')
                     axios.post('managedby.herokuapp.com:80/api/sendinviteemail', {
                         firstname: firstname,
                         pin: company_pin,
@@ -349,6 +356,7 @@ export default {
           this.$refs['modal-two'].hide()
       },
       findMyRequest(){
+          headers.set('Content-Type', 'application/json')
           axios.post('managedby.herokuapp.com:80/api/myrequests', {
                   request_by: this.my_email
           }).then( response => {
