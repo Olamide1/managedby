@@ -3,13 +3,16 @@ const fastify = require('fastify')({
   logger: true
 })
 const cors = require('cors')
+require('dotenv').config()
+
+var db = process.env.MONGODB_URL
 
 fastify.use(cors())
 // Require external modules
 const mongoose = require('mongoose')
 const routes = require('./routes')
 // Connect to DB
-mongoose.connect('mongodb://localhost/managedby')
+mongoose.connect(db)
  .then(() => console.log('MongoDB connected…'))
  .catch(err => console.log(err))
 // Declare a route
