@@ -2,26 +2,13 @@
 const fastify = require('fastify')({
   logger: true
 })
-var allowCrossDomain = function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
 
-  // intercept OPTIONS method
-  if ('OPTIONS' == req.method) {
-    res.send(200);
-  }
-  else {
-    next();
-  }
-};
 const cors = require('cors')
 require('dotenv').config()
 
 var db = process.env.MONGODB_URL
 
 fastify.use(cors())
-fastify.use(allowCrossDomain)
 
 // Require external modules
 const mongoose = require('mongoose')
@@ -34,6 +21,7 @@ mongoose.connect(db)
 routes.forEach((route, index) => {
     fastify.route(route)
    })
+
 fastify.get('/', async (request, reply) => {
   return { hello: 'world' }
 })

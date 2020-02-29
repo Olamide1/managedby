@@ -216,7 +216,7 @@ export default {
         },
         getCreatedBy () {
             console.log(this.creator)
-            axios.post('managedby.herokuapp.com:80/api/coll',{ crossdomain: true }, {
+            axios.post('managedby.herokuapp.com:80/api/coll', { crossdomain: true }, {
                 creator: this.creator
             }).then( res => {
                 console.log(res.data)

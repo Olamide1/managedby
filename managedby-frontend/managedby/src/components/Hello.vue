@@ -25,7 +25,7 @@
        <b-form-group>
         <b-form-input placeholder="Company Pin" v-model="company_pin" type="password"></b-form-input>
       </b-form-group>
-      <b-button block variant="outline-dark" @click="login" size="sm">Login</b-button>
+      <b-button block variant="outline-dark" @click="login" size="sm">{{loginbtn}}</b-button>
       <p align="center">Don't have an account yet? <a @click="loginbutton = false">Signup</a></p>
     <h5 align="center" bgcolor="red">{{message}}</h5>
     </div>
@@ -59,7 +59,7 @@
       <b-button block variant="outline-dark" size="sm" @click="signup">{{signupbutton}}</b-button>
     <h5 align="center" bgcolor="red">{{message}}</h5>
 
- <p align="center">Already have an account? <a @click="loginbutton = true">{{loginbtn}}</a></p>
+ <p align="center">Already have an account? <a @click="loginbutton = true">Login</a></p>
     </div>
     
   </div>
@@ -90,14 +90,17 @@ export default {
     login(){
       var company_email = this.company_email
       var password = this.company_pin
+      const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
       if (company_email == '' || password == '') {
         this.message = 'Please fill in your data'
       } else {
         this.loginbtn = 'Loading...'
-        axios.post('managedby.herokuapp.com:80/api/login',{ crossdomain: true }, {
+        axios.post('https://managedby.herokuapp.com:80/api/login', {
         company_email: company_email,
         company_pin: password
-      }).then( res => {
+      },{ crossdomain: true }, options).then( res => {
         if (res.data.length == 0) {
           this.message = 'Email or password in-correct'
         } else {
@@ -127,7 +130,7 @@ export default {
       this.signupbutton = 'Loading...'
       var office = this.office
       var creator = this.company_email
-      axios.post('managedby.herokuapp.com:80/api/signup',{ crossdomain: true }, {
+      axios.post('managedby.herokuapp.com:80/api/signup', {
         firstname: firstname,
         lastname: lastname,
         company_name: company_name,
