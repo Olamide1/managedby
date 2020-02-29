@@ -8,7 +8,14 @@ require('dotenv').config()
 var db = process.env.MONGODB_URL
 
 fastify.use(cors())
-fastify.options('*', cors())
+
+fastify.all('*', function(req, res, next) {
+  var origin = req.get('origin'); 
+  res.header('Access-Control-Allow-Origin', origin);
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 // Require external modules
 const mongoose = require('mongoose')
 const routes = require('./routes')
