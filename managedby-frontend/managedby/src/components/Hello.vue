@@ -59,7 +59,7 @@
       <b-button block variant="outline-dark" size="sm" @click="signup">{{signupbutton}}</b-button>
     <h5 align="center" bgcolor="red">{{message}}</h5>
 
- <p align="center">Already have an account? <a @click="loginbutton = true">Login</a></p>
+ <p align="center">Already have an account? <a @click="loginbutton = true">{{loginbtn}}</a></p>
     </div>
     
   </div>
@@ -82,6 +82,7 @@ export default {
       message: '',
       company_name: '',
       company_size:'',
+      loginbtn: 'Login',
       loginbutton: true
     }
   },
@@ -92,7 +93,8 @@ export default {
       if (company_email == '' || password == '') {
         this.message = 'Please fill in your data'
       } else {
-        axios.post('https://managedby.herokuapp.com:80/api/login', {
+        this.loginbtn = 'Loading...'
+        axios.post('managedby.herokuapp.com:80/api/login', {
         company_email: company_email,
         company_pin: password
       }).then( res => {
@@ -126,7 +128,7 @@ export default {
       var office = this.office
       var creator = this.company_email
 
-      axios.post('https://managedby.herokuapp.com:80/api/signup', {
+      axios.post('managedby.herokuapp.com:80/api/signup', {
         firstname: firstname,
         lastname: lastname,
         company_name: company_name,
@@ -149,7 +151,7 @@ export default {
           sessionStorage.setItem('pin', this.company_pin)
           sessionStorage.setItem('created_by', this.company_email)
           this.$router.push('/dashboard')
-          axios.post('https://managedby.herokuapp.com:80/api/sendsignupemail', {
+          axios.post('managedby.herokuapp.com:80/api/sendsignupemail', {
             company_email : this.company_email,
             firstname: firstname
           }).then( respo => {

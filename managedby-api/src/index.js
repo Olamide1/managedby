@@ -8,6 +8,7 @@ require('dotenv').config()
 var db = process.env.MONGODB_URL
 
 fastify.use(cors())
+fastify.options('*', cors())
 // Require external modules
 const mongoose = require('mongoose')
 const routes = require('./routes')
