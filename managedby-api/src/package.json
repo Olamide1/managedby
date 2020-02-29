@@ -12,6 +12,9 @@
     "management",
     "tool."
   ],
+  "engines": {
+    "node": "12.x"
+  },
   "author": "Olamide Akomolafe <olamideakomolafe1234@gmail.com>",
   "license": "ISC",
   "dependencies": {
