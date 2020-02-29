@@ -84,7 +84,7 @@ export default {
             this.$router.push('/')
         },
         deleteUser (id, index) {
-            axios.post('http://localhost:3000/api/deleteuser', {
+            axios.post('https://managedby.herokuapp.com:80/api/deleteuser', {
                 id: id
             }).then( resp => {
                 this.persons.splice(index, 1);
@@ -93,7 +93,7 @@ export default {
         },
         getCreatedBy () {
             console.log(this.creator)
-            axios.post('http://localhost:3000/api/coll', {
+            axios.post('https://managedby.herokuapp.com:80/api/coll', {
                 creator: this.creator
             }).then( res => {
                 console.log(res.data)

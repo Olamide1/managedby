@@ -119,7 +119,7 @@ export default {
             this.$router.push('/')
         },
         findMyRequest(){
-          axios.post('http://localhost:3000/api/myrequests', {
+          axios.post('https://managedby.herokuapp.com:80/api/myrequests', {
                   request_by: this.company_email
           }).then( response => {
               console.log(response.data)
@@ -131,7 +131,7 @@ export default {
           })
       },
       findUndone() {
-          axios.post('http://localhost:3000/api/findundone',{
+          axios.post('https://managedby.herokuapp.com:80/api/findundone',{
               company_name: this.company_name,
               status: 'todo'
           }).then( resp => {
@@ -142,7 +142,7 @@ export default {
           })
       },
       loadCompanyRequest() {
-            axios.post('http://localhost:3000/api/getcompanyrequest', {
+            axios.post('https://managedby.herokuapp.com:80/api/getcompanyrequest', {
                     company_name: this.company_name
             }).then( resp => {
                 this.total_request = resp.data.length

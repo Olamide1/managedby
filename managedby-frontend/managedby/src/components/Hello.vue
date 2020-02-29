@@ -92,7 +92,7 @@ export default {
       if (company_email == '' || password == '') {
         this.message = 'Please fill in your data'
       } else {
-        axios.post('http://localhost:3000/api/login', {
+        axios.post('https://managedby.herokuapp.com:80/api/login', {
         company_email: company_email,
         company_pin: password
       }).then( res => {
@@ -126,7 +126,7 @@ export default {
       var office = this.office
       var creator = this.company_email
 
-      axios.post('http://localhost:3000/api/signup', {
+      axios.post('https://managedby.herokuapp.com:80/api/signup', {
         firstname: firstname,
         lastname: lastname,
         company_name: company_name,
@@ -149,7 +149,7 @@ export default {
           sessionStorage.setItem('pin', this.company_pin)
           sessionStorage.setItem('created_by', this.company_email)
           this.$router.push('/dashboard')
-          axios.post('http://localhost:3000/api/sendsignupemail', {
+          axios.post('https://managedby.herokuapp.com:80/api/sendsignupemail', {
             company_email : this.company_email,
             firstname: firstname
           }).then( respo => {

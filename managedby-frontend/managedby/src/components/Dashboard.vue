@@ -216,7 +216,7 @@ export default {
         },
         getCreatedBy () {
             console.log(this.creator)
-            axios.post('http://localhost:3000/api/coll', {
+            axios.post('https://managedby.herokuapp.com:80/api/coll', {
                 creator: this.creator
             }).then( res => {
                 console.log(res.data)
@@ -229,7 +229,7 @@ export default {
         markstatus(id, action){
             var status = action
             var id = id
-            axios.post('http://localhost:3000/api/updaterequest', {
+            axios.post('https://managedby.herokuapp.com:80/api/updaterequest', {
                 id: id,
                 status: status
             }).then( response => {
@@ -241,7 +241,7 @@ export default {
 
         },
         loadCompanyRequest() {
-            axios.post('http://localhost:3000/api/getcompanyrequest', {
+            axios.post('https://managedby.herokuapp.com:80/api/getcompanyrequest', {
                     company_name: this.company_name
             }).then( resp => {
                 this.total_request = resp.data.length
@@ -261,7 +261,7 @@ export default {
             if (request == ''|| category == '' || area == '') {
                 this.message = 'Plese fill the forms'
             } else {
-                axios.post('http://localhost:3000/api/createrequest', {
+                axios.post('https://managedby.herokuapp.com:80/api/createrequest', {
                     request: request,
                     category: category,
                     area: area,
@@ -281,7 +281,7 @@ export default {
         deleteRequest(id, index){
             var identify = id
             var i = index
-            axios.post('http://localhost:3000/api/deleterequest', {
+            axios.post('https://managedby.herokuapp.com:80/api/deleterequest', {
                 id: identify
             }).then( resp => {
                 this.my_requests.splice(i, 1);
@@ -303,7 +303,7 @@ export default {
             if(firstname == '' || company_email == '') {
                 this.message = 'Fill in data please'
             } else {
-                axios.post('http://localhost:3000/api/signup', {
+                axios.post('https://managedby.herokuapp.com:80/api/signup', {
                 firstname: firstname,
                 lastname: lastname,
                 role: role,
@@ -319,7 +319,7 @@ export default {
                 } else {
                     this.hideModal();
                     this.people++
-                    axios.post('http://localhost:3000/api/sendinviteemail', {
+                    axios.post('https://managedby.herokuapp.com:80/api/sendinviteemail', {
                         firstname: firstname,
                         pin: company_pin,
                         created_by: creator,
@@ -349,7 +349,7 @@ export default {
           this.$refs['modal-two'].hide()
       },
       findMyRequest(){
-          axios.post('http://localhost:3000/api/myrequests', {
+          axios.post('https://managedby.herokuapp.com:80/api/myrequests', {
                   request_by: this.my_email
           }).then( response => {
               console.log(response.data)
