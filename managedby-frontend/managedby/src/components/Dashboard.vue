@@ -119,7 +119,7 @@
         <b-form-input placeholder="Category (repairs, replacement)" v-model="category"></b-form-input>
       </b-form-group>
        <b-form-group>
-        <b-form-input placeholder="Location (could be dept, apartment number etc" v-model="area"></b-form-input>
+        <b-form-input placeholder="Location (could be dept, apartment number etc)" v-model="area"></b-form-input>
       </b-form-group>
       <b-form-group>
         <b-form-textarea placeholder="Detailed description" v-model="request"></b-form-textarea>

@@ -8,11 +8,11 @@
     <div v-if="loginbutton == true">
       <b-card title="ManagedBy Login">
       <b-card-text>
-     <b> Office Managers can:</b> <br>
-      1. Add colleagues, <br>
-      2. Collect, Organise and Manage requests <br>
+     <b> Office, Space & apartment Managers can:</b> <br>
+      1. Add people, <br>
+      2. Collect, Organise & Manage requests <br>
      
-    <b> Colleagues can: </b><br>
+    <b> People can: </b><br>
      1. Place requests. <br>
      2. Track execution.
     </b-card-text>
@@ -25,7 +25,7 @@
        <b-form-group>
         <b-form-input placeholder="Company Pin" v-model="company_pin" type="password"></b-form-input>
       </b-form-group>
-      <b-button block variant="outline-dark" @click="login" size="sm">{{loginbtn}}</b-button>
+      <b-button block variant="outline-dark" @click="login" size="sm">{{loginbtn}}</b-button> <br>
       <p align="center">Don't have an account yet? <a @click="loginbutton = false">Signup</a></p>
     <h5 align="center" bgcolor="red">{{message}}</h5>
     </div>
@@ -34,10 +34,11 @@
     <div v-else>
       <b-card title="Office manager signup">
       <b-card-text>
-   <p>Office/House Manager? Use ManagedBy to receive,manage & record help requests within your office or apartment building. Get started by: <br>
+   <p>Office, Space or House Manager? Use ManagedBy to receive, manage & record inhouse helpdesk requests 
+     within your office, apartment & buildings. Get started by: <br>
       1. Creating an account, <br>
-      2. Adding colleagues and <br>
-      3. Collect & Organize their requests on your dashboard.</p>
+      2. Adding people &<br>
+      3. easily collect, organize & keep everyone in the loop.</p>
     </b-card-text>
     </b-card> <br>
 
@@ -51,13 +52,14 @@
         <b-form-input placeholder="Company Name" v-model="company_name"></b-form-input>
         <b-form-input placeholder="Company Industry eg: Fintech" v-model="industry"></b-form-input>
         <b-form-input placeholder="Company size (An approximation will do)" v-model="company_size"></b-form-input>
-        <b-form-input placeholder="Office (Nairobi, Accra, HeadOffice)" v-model="office"></b-form-input>
+        <b-form-input placeholder="Office Location (Nairobi, Accra, HeadOffice)" v-model="office"></b-form-input>
     </b-form-group>
  <b-form-group>
-    <b-form-input placeholder="Company Pin ( 4 digit pin that would provide access to your colleagues)" v-model="company_pin" type="password"></b-form-input>
+    <b-form-input placeholder="Company Pin (4 digit pin that would provide access to your colleagues)" v-model="company_pin" type="password"></b-form-input>
   </b-form-group>
       <b-button block variant="outline-dark" size="sm" @click="signup">{{signupbutton}}</b-button>
     <h5 align="center" color="red">{{message}}</h5>
+    <br>
 
  <p align="center">Already have an account? <a @click="loginbutton = true">Login</a></p>
     </div>
