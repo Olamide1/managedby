@@ -281,6 +281,7 @@ export default {
                     this.my_requests.push({'status': status, 'category': category, 'area': area, 'request': request})
                     this.my_total_request++
                     this.hideModalTwo()
+                    alert('Your admin has received this request.')
                 }).catch(err => {
                     console.log(err)
                 })
@@ -297,6 +298,7 @@ export default {
             },{crossdomain: true}, options).then( resp => {
                 this.my_requests.splice(i, 1);
                 this.total_request = this.requests.length
+                alert('Request deleted')
             }).catch(err => {
                 console.log(err)
             })
