@@ -3,26 +3,21 @@ const User = require('../models/Users')
 const nodemailer = require('nodemailer')
 require('dotenv').config()
 
+
 let transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    host: 'smtp.mailtrap.io',
+    port: 2525,
     auth: {
-        XOAuth2: {
-            user: "olamideakomolafe1234@gmail.com", // Your gmail address.
-                                                  // Not @developer.gserviceaccount.com
-            clientId: "865742624250-pma89vrulkbq17j2n72cpnvg5np8nt3h.apps.googleusercontent.com",
-            clientSecret: "-vNg3tJlSzWxe0GVGHn3x6sI",
-            refreshToken: "1//0497l-j_rCYA9CgYIARAAGAQSNwF-L9IrkcEi44tlIoPRh2CoNp66-GxLnf7W1yCWVtVWUL6w3imRXa90_RJH5kDhtzyh6s2Hzrw"
-          }
+        user: '85ad72f0ccc14c',
+        pass: 'cd2162096033ef'
     }
 })
-
-
 exports.sendSignUpEmail = async(req, reply) => {
     try {
         var firstname = req.body.firstname
         var email = req.body.company_email
         await transporter.sendMail({
-            from: 'Mandy from ManagedBy <theolaakomolafe@gmail.com>',
+            from: 'Mandy from ManagedBy <27de9eb50a-3aaaba@inbox.mailtrap.io>',
             to: email,
             subject: 'Welcome to ManagedBy, ' + firstname,
             html: "<center> <img src='cid:unique@cid' width='250' height='200px'/> </center> <br> <p> Welcome " +'<b>' + firstname+ '</b>' 
@@ -38,8 +33,13 @@ exports.sendSignUpEmail = async(req, reply) => {
                 path: 'https://res.cloudinary.com/theakomolafe/image/upload/v1582911255/Header_ksb5kg.png',
                 cid: 'unique@cid'
             }]
+        }, function(err, info){
+            if (err) {
+                return err
+            } else {
+                return info
+            }
         })
-        return 'email sent'
     } catch( err){
         throw boom.boomify(err)
     }
@@ -55,7 +55,7 @@ exports.sendEmpInvite = async (req, reply) => {
         var company_name = req.body.company_name
 
         await transporter.sendMail({
-            from: 'Mandy from ManagedBy <theolaakomolafe@gmail.com>',
+            from: 'Mandy from ManagedBy <mandy@managedby.com>',
             to: email,
             subject: 'Hi, ' + firstname + ' you have been invited to ' + company_name + "'s ManagedBy",
             html: "<center> <img src='cid:unique@cid' width='250' height='200px'/> </center> <br> <p> Hello " +'<b>' + firstname+ '</b>, ' 
@@ -71,8 +71,13 @@ exports.sendEmpInvite = async (req, reply) => {
                 path: 'https://res.cloudinary.com/theakomolafe/image/upload/v1582911255/Header_ksb5kg.png',
                 cid: 'unique@cid'
             }]
+        }, function(err, info){
+            if (err){
+                return err
+            } else {
+                return info
+            }
         })
-        return 'email sent'
     } catch(err){
         throw boom.boomify(err)
     }

@@ -27,7 +27,7 @@
       </b-form-group>
       <b-button block variant="outline-dark" @click="login" size="sm">{{loginbtn}}</b-button>
       <p align="center">Don't have an account yet? <a @click="loginbutton = false">Signup</a></p>
-    <h5 align="center" color="red">{{message}}</h5>
+    <h5 align="center" bgcolor="red">{{message}}</h5>
     </div>
 
 
@@ -149,6 +149,9 @@ export default {
           this.message = "User already exist"
           this.signupbutton = "Signup"
         } else {
+          const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
           sessionStorage.setItem('firstname', firstname)
           sessionStorage.setItem('company_email', this.company_email)
           sessionStorage.setItem('company_name', this.company_name)
@@ -158,7 +161,7 @@ export default {
           this.$router.push('/dashboard')
           axios.post('http://managedby.herokuapp.com:80/api/sendsignupemail/',{
             company_email : this.company_email,
-            firstname: firstname
+            firstname: this.firstname
           }, { crossdomain: true }, options).then( respo => {
             console.log('email sent')
           }).catch(error => {
