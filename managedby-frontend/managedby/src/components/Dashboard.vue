@@ -331,17 +331,28 @@ export default {
                 } else {
                     this.hideModal();
                     this.people++
-                    axios.post('http://managedby.herokuapp.com:80/api/sendinviteemail/', {
-                        firstname: firstname,
-                        pin: company_pin,
-                        created_by: creator,
-                        company_email: company_email,
-                        company_name: company_name
-                    }, {crossdomain: true}, options).then(res=> {
-                        console.log('Email sent')
-                    }).catch( err => {
-                        console.log(err)
-                    })
+                    Email.send({
+
+                        Host : "smtp.gmail.com",
+                        Username : "olamideakomolafe1234@gmail.com",
+                        Password : "Holyjesus2016",
+                        port: 465,
+                        EnableSsl: true, 
+                        To : this.company_email,
+                        From : "Ola from ManagedBy <olamideakomolafe1234@gmail.com>",
+                        Subject : 'Hi, ' + this.firstname + ' you have been invited to ' + this.company_name + "'s ManagedBy",
+                        Body : "<center> <img src='https://res.cloudinary.com/theakomolafe/image/upload/v1582911255/Header_ksb5kg.png' /> </center> <br>" 
+            + "Hello " +'<b>' + this.firstname+ '</b>, ' 
+            + this.creator + " has invited you to join " + this.company_name + "'s ManagedBy account. <br>"
+            + " <b>Managedby</b> allows you to send in a helpdesk request for things like a broken screen or a broken window etc," 
+            + " to your office or apartment managers and, "
+            + " keeps you in the loop on progress and the issues are being handled.</p><br>" 
+            + "<h3> All you have to do is login with this(your email) email and this pin: " + this.pin + '</h3>'
+            + "<p>Of course, this beta is free for an entire month as we are mostly getting feedback to help" 
+            + " get the product better for you. Please feel free to reach out at any time.</p><br> Cheers."
+          }).then(
+            message => console.log(message)
+          )
                 }
             }).catch(err => {
                 console.log(err);
