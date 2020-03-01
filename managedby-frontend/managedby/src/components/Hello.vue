@@ -38,7 +38,7 @@
      within your office, apartment & buildings. Get started by: <br>
       1. Creating an account, <br>
       2. Adding people &<br>
-      3. easily collect, organize & keep everyone in the loop.</p>
+      3. easily collect, organize requests & keep everyone in the loop.</p>
     </b-card-text>
     </b-card> <br>
 

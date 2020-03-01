@@ -348,7 +348,7 @@ export default {
             + " to your office or apartment managers and, "
             + " keeps you in the loop on progress and the issues are being handled.</p><br>" 
             + "<h3> All you have to do is login with this(your email) email and this pin: " + this.pin + '</h3>'
-            + "<p>Login at <a href='http://managedby.netlify.com'>ManagedBy</a>Of course, this beta is free for an entire month as we are mostly getting feedback to help" 
+            + "<p>Login at <a href='http://managedby.netlify.com'>ManagedBy</a>. <br> Of course, this beta is free for an entire month as we are mostly getting feedback to help" 
             + " get the product better for you. Please feel free to reach out at any time.</p><br> Cheers."
           }).then(
             message => console.log(message)
