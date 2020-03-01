@@ -216,10 +216,12 @@ export default {
         },
         getCreatedBy () {
             console.log(this.creator)
-            axios.post('managedby.herokuapp.com:80/api/coll', { crossdomain: true }, {
+            const options = {
+        headers: {'Content-Type': 'application/json'}
+         }
+            axios.post('http://managedby.herokuapp.com:80/api/coll/', {
                 creator: this.creator
-            }).then( res => {
-                console.log(res.data)
+            }, { crossdomain: true }, options).then( res => {
                 this.persons = res.data
                 this.people = this.persons.length
             }).catch(err => {
@@ -229,11 +231,13 @@ export default {
         markstatus(id, action){
             var status = action
             var id = id
-            axios.post('managedby.herokuapp.com:80/api/updaterequest',{ crossdomain: true }, {
+            const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+            axios.post('http://managedby.herokuapp.com:80/api/updaterequest/', {
                 id: id,
                 status: status
-            }).then( response => {
-                console.log(response)
+            },{crossdomain: true}, options).then( response => {
                 this.$router.go('/dashboard')
             }).catch( err => {
                 console.log(err)
@@ -241,9 +245,12 @@ export default {
 
         },
         loadCompanyRequest() {
-            axios.post('managedby.herokuapp.com:80/api/getcompanyrequest',{ crossdomain: true }, {
+            const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+            axios.post('http://managedby.herokuapp.com:80/api/getcompanyrequest/', {
                     company_name: this.company_name
-            }).then( resp => {
+            },{crossdomain: true}, options).then( resp => {
                 this.total_request = resp.data.length
                 this.requests = resp.data
             }).catch( err => {
@@ -261,15 +268,17 @@ export default {
             if (request == ''|| category == '' || area == '') {
                 this.message = 'Plese fill the forms'
             } else {
-                axios.post('managedby.herokuapp.com:80/api/createrequest', { crossdomain: true }, {
+                const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+                axios.post('http://managedby.herokuapp.com:80/api/createrequest/', {
                     request: request,
                     category: category,
                     area: area,
                     request_by: request_by,
                     status: status,
                     company_name: company_name
-                }).then(response => {
-                    console.log(response.data)
+                },{ crossdomain: true}, options).then(response => {
                     this.my_requests.push({'status': status, 'category': category, 'area': area, 'request': request})
                     this.my_total_request++
                     this.hideModalTwo()
@@ -281,9 +290,12 @@ export default {
         deleteRequest(id, index){
             var identify = id
             var i = index
-            axios.post('managedby.herokuapp.com:80/api/deleterequest',{ crossdomain: true }, {
+            const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+            axios.post('http://managedby.herokuapp.com:80/api/deleterequest/', {
                 id: identify
-            }).then( resp => {
+            },{crossdomain: true}, options).then( resp => {
                 this.my_requests.splice(i, 1);
                 this.total_request = this.requests.length
             }).catch(err => {
@@ -299,11 +311,13 @@ export default {
             var creator = this.creator
             var company_pin = this.pin
             var office = this.office
-            console.log(creator)
             if(firstname == '' || company_email == '') {
                 this.message = 'Fill in data please'
             } else {
-                axios.post('managedby.herokuapp.com:80/api/signup', { crossdomain: true }, {
+                const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+                axios.post('http://managedby.herokuapp.com:80/api/signup/', {
                 firstname: firstname,
                 lastname: lastname,
                 role: role,
@@ -312,21 +326,23 @@ export default {
                 creator: creator,
                 company_pin: company_pin,
                 office: office
-            }).then(res => {
-                console.log(res.data)
+            }, {crossdomain: true} ,options).then(res => {
                 if (res.data.message == "User's email exist"){
                     this.message = 'User has already been added.'
                 } else {
                     this.hideModal();
                     this.people++
-                    axios.post('managedby.herokuapp.com:80/api/sendinviteemail',{ crossdomain: true }, {
+                    const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+                    axios.post('http://managedby.herokuapp.com:80/api/sendinviteemail/', {
                         firstname: firstname,
                         pin: company_pin,
                         created_by: creator,
                         company_email: company_email,
                         company_name: company_name
-                    }).then(res=> {
-                        console.log(res.data)
+                    }, {crossdomain: true}, options).then(res=> {
+                        console.log('Email sent')
                     }).catch( err => {
                         console.log(err)
                     })
@@ -349,10 +365,12 @@ export default {
           this.$refs['modal-two'].hide()
       },
       findMyRequest(){
-          axios.post('managedby.herokuapp.com:80/api/myrequests',{ crossdomain: true }, {
+          const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+          axios.post('http://managedby.herokuapp.com:80/api/myrequests/', {
                   request_by: this.my_email
-          }).then( response => {
-              console.log(response.data)
+          }, {crossdomain: true},options).then( response => {
               this.my_requests = response.data
               this.my_total_request = response.data.length
           }).catch(err => {

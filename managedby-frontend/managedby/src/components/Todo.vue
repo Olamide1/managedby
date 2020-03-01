@@ -119,9 +119,12 @@ export default {
             this.$router.push('/')
         },
         findMyRequest(){
-          axios.post('managedby.herokuapp.com:80/api/myrequests',{ crossdomain: true }, {
+            const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+          axios.post('http://managedby.herokuapp.com:80/api/myrequests/', {
                   request_by: this.company_email
-          }).then( response => {
+          },{ crossdomain: true }, options).then( response => {
               console.log(response.data)
               this.my_requests = response.data
               this.dones = response.data
@@ -131,10 +134,13 @@ export default {
           })
       },
       findUndone() {
-          axios.post('managedby.herokuapp.com:80/api/findundone',{ crossdomain: true },{
+          const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+          axios.post('http://managedby.herokuapp.com:80/api/findundone/',{
               company_name: this.company_name,
               status: 'todo'
-          }).then( resp => {
+          }, {crossdomain: true} , options).then( resp => {
               console.log(resp.data)
               this.todos = resp.data
           }).catch(err => {
@@ -142,9 +148,12 @@ export default {
           })
       },
       loadCompanyRequest() {
-            axios.post('managedby.herokuapp.com:80/api/getcompanyrequest',{ crossdomain: true }, {
+          const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+            axios.post('http://managedby.herokuapp.com:80/api/getcompanyrequest/', {
                     company_name: this.company_name
-            }).then( resp => {
+            },{ crossdomain: true},options).then( resp => {
                 this.total_request = resp.data.length
                 this.requests = resp.data
                 console.log(this.requests)

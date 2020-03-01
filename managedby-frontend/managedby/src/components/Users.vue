@@ -84,19 +84,23 @@ export default {
             this.$router.push('/')
         },
         deleteUser (id, index) {
-            axios.post('managedby.herokuapp.com:80/api/deleteuser',{ crossdomain: true }, {
+            const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+            axios.post('http://managedby.herokuapp.com:80/api/deleteuser/', {
                 id: id
-            }).then( resp => {
+            },{crossdomain: true}, options).then( resp => {
                 this.persons.splice(index, 1);
                 this.total_persons = this.persons.length
             })
         },
         getCreatedBy () {
-            console.log(this.creator)
-            axios.post('managedby.herokuapp.com:80/api/coll', { crossdomain: true }, {
+            const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+            axios.post('http://managedby.herokuapp.com:80/api/coll/', {
                 creator: this.creator
-            }).then( res => {
-                console.log(res.data)
+            }, {crossdomain:true} ,options).then( res => {
                 this.persons = res.data
             }).catch(err => {
                 console.log(err)

@@ -27,7 +27,7 @@
       </b-form-group>
       <b-button block variant="outline-dark" @click="login" size="sm">{{loginbtn}}</b-button>
       <p align="center">Don't have an account yet? <a @click="loginbutton = false">Signup</a></p>
-    <h5 align="center" bgcolor="red">{{message}}</h5>
+    <h5 align="center" color="red">{{message}}</h5>
     </div>
 
 
@@ -57,7 +57,7 @@
     <b-form-input placeholder="Company Pin ( 4 digit pin that would provide access to your colleagues)" v-model="company_pin" type="password"></b-form-input>
   </b-form-group>
       <b-button block variant="outline-dark" size="sm" @click="signup">{{signupbutton}}</b-button>
-    <h5 align="center" bgcolor="red">{{message}}</h5>
+    <h5 align="center" color="red">{{message}}</h5>
 
  <p align="center">Already have an account? <a @click="loginbutton = true">Login</a></p>
     </div>
@@ -97,14 +97,14 @@ export default {
         this.message = 'Please fill in your data'
       } else {
         this.loginbtn = 'Loading...'
-        axios.post('https://managedby.herokuapp.com:80/api/login', {
+        axios.post('http://managedby.herokuapp.com:80/api/login/', {
         company_email: company_email,
         company_pin: password
       },{ crossdomain: true }, options).then( res => {
         if (res.data.length == 0) {
           this.message = 'Email or password in-correct'
+          this.loginbtn = 'Login'
         } else {
-          console.log(res.data)
           sessionStorage.setItem('firstname',res.data[0].firstname)
           sessionStorage.setItem('company_email', res.data[0].company_email)
           sessionStorage.setItem('company_name', res.data[0].company_name)
@@ -130,7 +130,10 @@ export default {
       this.signupbutton = 'Loading...'
       var office = this.office
       var creator = this.company_email
-      axios.post('managedby.herokuapp.com:80/api/signup', {
+       const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+      axios.post('http://managedby.herokuapp.com:80/api/signup/', {
         firstname: firstname,
         lastname: lastname,
         company_name: company_name,
@@ -141,7 +144,7 @@ export default {
         office: office,
         creator: creator,
         company_pin: password
-      }).then( resp => {
+      },{ crossdomain: true }, options).then( resp => {
         if (resp.data.message == "User's email exist") {
           this.message = "User already exist"
           this.signupbutton = "Signup"
@@ -153,11 +156,11 @@ export default {
           sessionStorage.setItem('pin', this.company_pin)
           sessionStorage.setItem('created_by', this.company_email)
           this.$router.push('/dashboard')
-          axios.post('managedby.herokuapp.com:80/api/sendsignupemail',{ crossdomain: true }, {
+          axios.post('http://managedby.herokuapp.com:80/api/sendsignupemail/',{
             company_email : this.company_email,
             firstname: firstname
-          }).then( respo => {
-            console.log(respo)
+          }, { crossdomain: true }, options).then( respo => {
+            console.log('email sent')
           }).catch(error => {
             console.log(error)
           })

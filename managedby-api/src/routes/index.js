@@ -4,92 +4,92 @@ const requestController = require('../controllers/requestController')
 const routes = [
     {
         method: 'POST',
-        url: '/api/login',
+        url: '/api/login/',
         handler: userController.login
     },
     {
         method: 'POST',
-        url: '/api/signup',
+        url: '/api/signup/',
         handler: userController.signup
     },
     {
         method: 'GET',
-        url: '/api/users',
+        url: '/api/users/',
         handler: userController.allUsers
     },
     {
         method: 'POST',
-        url: '/api/deleteuser',
+        url: '/api/deleteuser/',
         handler: userController.deleteUser
     },
     {
         method: 'POST',
-        url: '/api/companyname',
+        url: '/api/companyname/',
         handler: userController.SearchByCompany
     },
     {
         method: 'POST',
-        url: '/api/updaterequest',
+        url: '/api/updaterequest/',
         handler: requestController.updateRequestStatus
     },
     {
         method: 'POST',
-        url: '/api/addemployee',
+        url: '/api/addemployee/',
         handler: userController.addEmployees
     },
     {
         method: 'POST',
-        url: '/api/getcompanyrequest',
+        url: '/api/getcompanyrequest/',
         handler: requestController.loadCompanyRequests  
     },
     {
         method: 'POST',
-        url: '/api/createrequest',
+        url: '/api/createrequest/',
         handler: requestController.createRequest
     },
     {
         method: 'POST',
-        url: '/api/myrequests',
+        url: '/api/myrequests/',
         handler: requestController.findMyRequests
     },
     {
         method: 'POST',
-        url: '/api/coll',
+        url: '/api/coll/',
         handler: userController.searchByCreatedBy
     },
     {
         method: 'POST',
-        url: '/api/deleterequest',
+        url: '/api/deleterequest/',
         handler: requestController.deleteRequest
     }, 
     {
         method: 'POST',
-        url: '/api/findrequestsbyid',
+        url: '/api/findrequestsbyid/',
         handler: requestController.findById
     },
     {
       method: 'GET',
-      url: '/api/allrequests',
+      url: '/api/allrequests/',
       handler: requestController.allRequests
     },
     {
         method: 'POST',
-        url: '/api/findundone',
+        url: '/api/findundone/',
         handler: requestController.findUndoneRequests
     },
     {
         method: 'POST',
-        url: '/api/findmydone',
+        url: '/api/findmydone/',
         handler: requestController.findMyDoneRequests
     },
     {
         method: 'POST',
-        url: '/api/sendsignupemail',
+        url: '/api/sendsignupemail/',
         handler: userController.sendSignUpEmail
     },
     {
         method: 'POST',
-        url: '/api/sendinviteemail',
+        url: '/api/sendinviteemail/',
         handler: userController.sendEmpInvite
     }
 ]
