@@ -1,13 +1,18 @@
 const boom = require('boom')
 const User = require('../models/Users')
 const nodemailer = require('nodemailer')
+require('dotenv').config()
 
 let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
+    service: 'Gmail',
     auth: {
-        user: 'theolaakomolafe@gmail.com',
-        pass: 'Holyjesus2016'
+        XOAuth2: {
+            user: "olamideakomolafe1234@gmail.com", // Your gmail address.
+                                                  // Not @developer.gserviceaccount.com
+            clientId: "865742624250-pma89vrulkbq17j2n72cpnvg5np8nt3h.apps.googleusercontent.com",
+            clientSecret: "-vNg3tJlSzWxe0GVGHn3x6sI",
+            refreshToken: "1//0497l-j_rCYA9CgYIARAAGAQSNwF-L9IrkcEi44tlIoPRh2CoNp66-GxLnf7W1yCWVtVWUL6w3imRXa90_RJH5kDhtzyh6s2Hzrw"
+          }
     }
 })
 
