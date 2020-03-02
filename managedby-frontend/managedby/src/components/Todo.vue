@@ -45,6 +45,7 @@
                  <th scope="col">Status</th>
                  <th scope="col">Area</th>
                  <th scope="col">Category</th>
+                 <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody v-for="(todo, index) in todos" :key="index">
@@ -52,6 +53,14 @@
                     <td><span class="badge badge-danger">todo</span></td>
                     <td>{{todo.area}}</td>
                     <td>{{todo.category}}</td>
+                    <td>
+                        <b-dropdown id="dropdown-1" dropright  variant="outline-dark">
+                                <b-dropdown-item>
+                  <button class="btn btn-outline-dark" @click="markstatus(todo._id, 'doing')">Doing</button>
+                  <button class="btn btn-outline-dark" @click="markstatus(todo._id, 'done')">Done</button>
+               </b-dropdown-item>
+                        </b-dropdown> 
+                    </td>
                 </tr>
             </tbody>
             </table>
@@ -80,7 +89,7 @@
             </thead>
             <tbody v-for="(done, index) in dones" :key="index">
                 <tr v-show="done.status == 'done'">
-                    <td><span class="badge badge-success">done</span></td>
+                    <td><span class="badge badge-success">Done</span></td>
                     <td>{{done.area}}</td>
                     <td>{{done.category}}</td>
                 </tr>
@@ -133,6 +142,22 @@ export default {
               console.log(err)
           })
       },
+       markstatus(id, action){
+            var status = action
+            var id = id
+            const options = {
+        headers: {'Content-Type': 'application/json'}
+      }
+            axios.post('http://managedby.herokuapp.com:80/api/updaterequest/', {
+                id: id,
+                status: status
+            },{crossdomain: true}, options).then( response => {
+                this.$router.go('/dashboard')
+            }).catch( err => {
+                console.log(err)
+            })
+
+        },
       findUndone() {
           const options = {
         headers: {'Content-Type': 'application/json'}

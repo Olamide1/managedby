@@ -41,7 +41,7 @@
                     </p>
                 </div>
         </div>
-        <div class="card" style="width: 50%;">
+        <div class="card text-white bg-dark" style="width: 50%;">
             <div class="card-body">
                 <h5 class="card-title">Total users for {{company_name}}</h5>
                     <p class="card-text">
@@ -87,7 +87,7 @@
                 <td>{{request.category}}</td>
            <td>
                <span v-if="request.status == 'todo'" class="badge badge-danger">Todo</span>
-                <span v-else-if="request.status == 'doing'" class="badge badge-primary">Doing</span>
+                <span v-else-if="request.status == 'doing'" class="badge badge-dark">Doing</span>
                 <span v-else class="badge badge-success"> Done</span>
            </td>
            <td align="center">
@@ -113,7 +113,7 @@
 <!-- User section -->
 
     <div v-else class="scroll">
-        <b-button variant="outline-dark" align="center" @click="showModalTwo">Submit request</b-button><br><br>
+        <b-button squared variant="outline-dark" align="center" @click="showModalTwo">Submit request</b-button><br><br>
     <b-modal ref="modal-two" hide-footer title="Place request">
       <b-form-group>
         <b-form-input placeholder="Category (repairs, replacement)" v-model="category"></b-form-input>
@@ -125,9 +125,9 @@
         <b-form-textarea placeholder="Detailed description" v-model="request"></b-form-textarea>
       </b-form-group>
       <p align="center">{{message}}</p>
-      <b-button class="mt-3" variant="outline-dark" block @click="createRequest">Submit</b-button>
+      <b-button class="mt-3" variant="outline-dark" squared @click="createRequest">Submit</b-button>
     </b-modal>
-    <div class="card" style="width: 60%;">
+    <div class="card text-white bg-dark" style="width: 60%;">
             <div class="card-body">
                 <h5 class="card-title">Total requests by {{name}}</h5>
                     <p class="card-text">
@@ -161,7 +161,7 @@
                     <b-dropdown id="dropdown-1" dropright  variant="outline-dark">
                         <b-dropdown-header>Request Details </b-dropdown-header> 
                         <b-dropdown-item>{{my_request.request}}</b-dropdown-item>
-                         <b-dropdown-item><button class="btn btn-outline-dark" @click="deleteRequest(my_request._id, index)">Delete</button></b-dropdown-item>
+                         <b-dropdown-item><button squared class="btn btn-outline-dark" @click="deleteRequest(my_request._id, index)">Delete</button></b-dropdown-item>
                      </b-dropdown>
                 </td>  
             </tr>

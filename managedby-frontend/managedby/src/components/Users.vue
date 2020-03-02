@@ -46,7 +46,7 @@
                     <b-dropdown id="dropdown-1" dropright variant="dark-outline">
                         <b-dropdown-header><h5>ROLE: {{person.role}}</h5></b-dropdown-header>
                         <b-dropdown-item class="list-group">
-                             <button class="btn btn-outline-danger" @click="deleteUser(person._id, index)">Delete</button>
+                             <button class="btn btn-outline-dark" @click="deleteUser(person._id, index)">Delete</button>
                         </b-dropdown-item>
                     </b-dropdown>
                 </td>
