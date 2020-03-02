@@ -332,7 +332,7 @@ export default {
                     this.message = 'User has already been added.'
                 } else {
                     this.hideModal();
-                    alert('person added, Tell them to check their email for details.')
+                    alert('Person Added. Please, ask them to check their emails for details.')
                     this.people++
                     Email.send({
 
