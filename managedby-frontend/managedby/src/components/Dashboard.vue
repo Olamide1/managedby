@@ -9,7 +9,7 @@
             </router-link>
        
             <router-link to="/users" v-show="role == 'Admin'">
-                <span>Colleagues</span>
+                <span>People</span>
             </router-link>
             <router-link to="/todo" v-show="role == 'Admin'">
                 <span>Todo</span>
@@ -332,6 +332,7 @@ export default {
                     this.message = 'User has already been added.'
                 } else {
                     this.hideModal();
+                    alert('person added, Tell them to check their email for details.')
                     this.people++
                     Email.send({
 

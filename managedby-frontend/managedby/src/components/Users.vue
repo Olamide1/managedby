@@ -9,7 +9,7 @@
             </router-link>
        
             <router-link to="/users" v-show="role == 'Admin'">
-                <span>Colleagues</span>
+                <span>People</span>
             </router-link>
             <router-link to="/todo" v-show="role == 'Admin'">
                 <span>Todo</span>
