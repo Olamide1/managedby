@@ -65,7 +65,7 @@
         <b-form-input placeholder="Office (eg. Nairobi)" v-model="office"></b-form-input>
       </b-form-group>
       <p align="center">{{message}}</p>
-      <b-button class="mt-3" variant="outline-dark" block @click="addColleagues">Add</b-button>
+      <b-button class="mt-3" variant="outline-dark" block @click="addColleagues">{{add}}</b-button>
     </b-modal>
 <br>
     <center>
@@ -191,6 +191,7 @@ export default {
             name: sessionStorage.getItem('firstname'),
             role: sessionStorage.getItem('role'),
             company_email: '',
+            add: 'Add',
             firstname: '',
             lastname: '',
             category: '',
@@ -311,7 +312,8 @@ export default {
             var company_email = this.company_email
             var creator = this.creator
             var company_pin = this.pin
-            var office = this.office
+            var office = this.
+            this.add = 'Adding...'
             if(firstname == '' || company_email == '') {
                 this.message = 'Fill in data please'
             } else {
