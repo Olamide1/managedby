@@ -312,7 +312,7 @@ export default {
             var company_email = this.company_email
             var creator = this.creator
             var company_pin = this.pin
-            var office = this.
+            var office = this.office
             this.add = 'Adding...'
             if(firstname == '' || company_email == '') {
                 this.message = 'Fill in data please'
