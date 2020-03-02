@@ -6,17 +6,15 @@
       </b-navbar-brand>
     </b-navbar>
     <div v-if="loginbutton == true">
-      <b-card title="ManagedBy Login">
-      <b-card-text>
-     <b> Office, Space & apartment Managers can:</b> <br>
-      1. Add people, <br>
-      2. Collect, Organise & Manage requests <br>
-     
-    <b> People can: </b><br>
-     1. Place requests. <br>
-     2. Track execution.
-    </b-card-text>
-    </b-card> <br>
+      <div class="card mb-3">
+  <img src="../assets/login.svg" height="150px" class="card-img-top" alt="Login">
+  <div class="card-body">
+    <h5 class="card-title">Managedby Login</h5>
+    <p class="card-text">Access your account to place or receive helpdesk requests within your space.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
+</div>
+  <br>
     
       <b-form-group>
         <b-form-input placeholder="Company Email" v-model="company_email" type="email"></b-form-input>
@@ -32,17 +30,21 @@
 
 
     <div v-else>
-      <b-card title="Office manager signup">
-      <b-card-text>
-   <p>Office, Space or House Manager? Use ManagedBy to receive, manage & record inhouse helpdesk requests 
-     within your office, apartment & buildings. Get started by: <br>
-      1. Creating an account, <br>
-      2. Adding people &<br>
-      3. easily collect, organize requests & keep everyone in the loop.</p>
-    </b-card-text>
-    </b-card> <br>
+    <div class="card mb-3">
+  <img src="../assets/intro-image.svg" height="150px" class="card-img-top" alt="image">
+  <div class="card-body">
+    <h5 class="card-title">Space Manager Signup</h5>
+    <p class="card-text">Use ManagedBy to receive, manage & record inhouse helpdesk requests 
+     within your office, apartment & buildings. Just: <br>
+      1. Create an account, <br>
+      2. Add people & <br>
+      3. Easily Manage these helpdesk requests.</p>
+  </div>
+</div>
+       <br>
 
-  <b-form-group>
+  <form netlify>
+    <b-form-group>
         <b-form-input placeholder="Firstname"  v-model="firstname"></b-form-input>
         <b-form-input placeholder="Lastname"  v-model="lastname"></b-form-input>
   </b-form-group>
@@ -59,6 +61,7 @@
   </b-form-group>
       <b-button block variant="outline-dark" size="sm" @click="signup">{{signupbutton}}</b-button>
     <h5 align="center" color="red">{{message}}</h5>
+  </form>
     <br>
 
  <p align="center">Already have an account? <a @click="loginbutton = true">Login</a></p>
