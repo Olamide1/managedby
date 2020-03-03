@@ -11,7 +11,6 @@
   <div class="card-body">
     <h5 class="card-title">Managedby Login</h5>
     <p class="card-text">Access your account to place or receive helpdesk requests within your space.</p>
-    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
   </div>
 </div>
   <br>
@@ -59,8 +58,8 @@
  <b-form-group>
     <b-form-input placeholder="Company Pin (4 digit pin that would provide access to your colleagues)" v-model="company_pin" type="password"></b-form-input>
   </b-form-group>
-      <b-button block variant="outline-dark" size="sm" @click="signup">{{signupbutton}}</b-button>
-    <h5 align="center" color="red">{{message}}</h5>
+      <b-button block variant="outline-dark" size="sm" @click="signup">{{signupbutton}}</b-button> <br>
+    <h6 align="center" color="red">{{message}}</h6>
   </form>
     <br>
 
@@ -132,13 +131,16 @@ export default {
       var company_size = this.company_size
       var password = this.company_pin
       var role = 'Admin'
-      this.signupbutton = 'Loading...'
       var office = this.office
       var creator = this.company_email
        const options = {
         headers: {'Content-Type': 'application/json'}
       }
-      axios.post('http://managedby.herokuapp.com:80/api/signup/', {
+      if(firstname == '' || lastname == '' || company_email == '' || company_name == '' || company_size== '' || password == '') {
+        this.message = 'Please fill details'
+      } else {
+         this.signupbutton = 'Loading...'
+        axios.post('http://managedby.herokuapp.com:80/api/signup/', {
         firstname: firstname,
         lastname: lastname,
         company_name: company_name,
@@ -172,9 +174,9 @@ export default {
             Subject : "Welcome to ManagedBy " + this.firstname,
             Body : "<center> <img src='https://res.cloudinary.com/theakomolafe/image/upload/v1582911255/Header_ksb5kg.png' /> </center> <br> <p> Welcome " +'<b>' + firstname+ '</b>' 
             + ", Thank you for being a part of our journey & joining our Beta. <br>"
-            + " <b>Managedby</b> allows Office, space, & house managers, add people," 
+            + " <b>Managedby</b> allows space managers to add people," 
             + " recieve internal helpdesk requests, "
-            + " manage tasks, while keeping everyone in the loop on progress.</p><br>" 
+            + " manage tasks, have records for compliance while keeping everyone in the loop on progress.</p><br>" 
             + "<h3> Say goodbye to taps on the shoulder and awkward office visits.</h3>"
             + "<p>Of course, this beta is free for a month as we are mostly getting feedback to improve" 
             + " the product for the companies we'll be working with. Please feel free to reach out at any time.</p><br> Cheers."
@@ -185,6 +187,7 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+      }
     }
   }
 }
